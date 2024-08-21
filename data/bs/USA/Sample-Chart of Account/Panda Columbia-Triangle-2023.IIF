@@ -1,0 +1,382 @@
+!HDR	PROD	VER	REL	IIFVER	DATE	TIME	ACCNTNT	ACCNTNTSPLITTIME
+HDR	QuickBooks Premier	Version 32.0D	Release R16P	1	2024-07-19	1721414454	N	0
+!ACCNT	NAME	REFNUM	TIMESTAMP	ACCNTTYPE	OBAMOUNT	DESC	ACCNUM	SCD	BANKNUM	EXTRA	HIDDEN	DELCOUNT	USEID
+ACCNT	BOA Chk - 3734	33	1607724057	BANK	"-194,422.77"			0			N	0	N
+ACCNT	Cash on hand	34	1607724904	BANK	-298.19			0			N	0	N
+ACCNT	Payroll	32	1429213984	BANK	"-318,833.23"			0			N	0	N
+ACCNT	PPP Bank	66	1609176376	BANK	0.00			0			N	0	N
+ACCNT	SC Banking Center	89	1679065047	BANK	"-41,015.15"			0			N	0	N
+ACCNT	Accounts Receivable	41	1608221786	AR	0.00	Unpaid or unapplied customer invoices and credits	11000	0			N	0	N
+ACCNT	Food Inventory	4	1429212080	OCASSET	0.00	Inventory of food and other meal ingredients	12400	0			N	0	N
+ACCNT	Payroll Asset	65	1609172635	OCASSET	226.65	Payroll Asset	2120	0			N	0	N
+ACCNT	Undeposited Funds	42	1608221787	OCASSET	0.00	"Funds received, but not yet deposited to a bank account"	12000	0		UNDEPOSIT	N	0	N
+ACCNT	Accumulated Depreciation	6	1429212080	FIXASSET	0.00	"Accumulated depreciation on equipment, buildings and improvements"	17000	0			N	0	N
+ACCNT	Furniture and Equipment	5	1429212080	FIXASSET	"3,677.44"	Furniture and equipment with useful life exceeding one year	15000	0			N	0	N
+ACCNT	Leasehold Improvements	84	1661369763	FIXASSET	"96,000.00"			0			N	0	N
+ACCNT	Security Deposits Asset	7	1429212080	OASSET	0.00	"Deposits and other returnable funds held by other entities (Rent, Utilities, etc.)"	18700	0			N	0	N
+ACCNT	Accounts Payable	77	1660663782	AP	0.00	Unpaid or unapplied vendor bills or credits	20000	0			N	0	N
+ACCNT	BOA CC Unlimited - 4769	80	1660672239	CCARD	-705.28	BOA CC Unlimited - 4769		0			N	0	N
+ACCNT	BOA CC Unlimited - 5206	86	1675200117	CCARD	-50.63	BANK OF AMERICA - 5206		0			N	0	N
+ACCNT	Capital One - 4122	46	1608238175	CCARD	"63,656.24"			0			N	0	N
+ACCNT	Capital One - 4510	45	1608238152	CCARD	"-54,284.66"			0			N	0	N
+ACCNT	County Tax Payable	43	1608221909	OCLIAB	"-2,972.77"			0			N	0	N
+ACCNT	Credit card tips	44	1608222046	OCLIAB	0.00			0			N	0	N
+ACCNT	Employee Tips Payable	8	1429212080	OCLIAB	0.00	"Tips collected by restaurant, payable to employees"	25100	0			N	0	N
+ACCNT	Payroll Liabilities	31	1429212085	OCLIAB	"-48,850.93"	"Unpaid payroll liabilities. Amounts withheld or accrued, but not yet paid"	24000	0			N	0	N
+ACCNT	Sales Tax Payable	29	1429212081	OCLIAB	"1,887.90"	"Unpaid sales taxes. Amounts charged on sales, but not yet paid to the government"	25500	0		SALESTAX	N	0	N
+ACCNT	Tax Payable	73	1622132584	OCLIAB	"1,203.70"			0			N	0	N
+ACCNT	EIDL Loan	47	1608238268	LTLIAB	"-28,366.00"			0			N	0	N
+ACCNT	PPP Funds	67	1609176411	LTLIAB	"-15,537.00"			0			N	0	N
+ACCNT	PPP Loan	38	1607983600	LTLIAB	"15,537.00"			0			N	0	N
+ACCNT	Members Draw	27	1429212081	EQUITY	"269,638.01"	Monies taken out of the business by the member	30700	0			N	0	N
+ACCNT	Members Equity	28	1429212081	EQUITY	"-130,000.00"	"Monies invested in the business by the member, and profits kept in company accounts"	32000	0		RETEARNINGS	N	0	N
+ACCNT	Opening Balance Equity	3	1429212080	EQUITY	"-6,894.64"	Opening balances during setup post to this account. The balance of this account should be zero after completing your setup	30000	0		OPENBAL	N	0	N
+ACCNT	Shareholder Contribution	99	1711115740	EQUITY	"-81,289.61"			0			N	0	N
+ACCNT	Shareholder Withdraw	40	1608220755	EQUITY	"487,039.03"			0			N	0	N
+ACCNT	Food Sales	9	1429212080	INC	"-3,631,324.00"	Food sales	43800	293			N	0	N
+ACCNT	Sales return and discount	68	1617391907	INC	0.00			0			N	0	N
+ACCNT	Beverage Purchase	37	1607977813	COGS	"17,078.77"			0			N	0	N
+ACCNT	Food Purchases	10	1429212080	COGS	"1,583,688.41"	"Food purchases including meats, vegetables, and all ingredients"	50900	493			N	0	N
+ACCNT	Advertising and Promotion	13	1429212080	EXP	889.66	"Advertising, marketing, graphic design, and other promotional expenses"	60000	304			N	0	N
+ACCNT	Auto and Truck expenses	81	1660691077	EXP	"8,868.07"			0			N	0	N
+ACCNT	Auto and Truck expenses:Gasoline	54	1608313465	EXP	573.17			0			N	0	N
+ACCNT	Bank Service Charges	14	1429212080	EXP	883.69	"Bank account service fees, bad check charges and other bank fees"	60400	302			N	0	N
+ACCNT	Business Licenses and Permits	15	1429212080	EXP	"2,475.51"	"Business licenses, permits, and other business-related fees"	61000	316			N	0	N
+ACCNT	Computer and Internet Expenses	16	1429212080	EXP	"6,681.93"	"Computer supplies, off-the-shelf software, online fees, and other computer or internet related expenses"	61700	302			N	0	N
+ACCNT	Depreciation Expense	17	1429212080	EXP	0.00	"Depreciation on equipment, buildings and improvements"	62400	0			N	0	N
+ACCNT	Entertainment	87	1675261631	EXP	230.58	Entertainment		0			N	0	N
+ACCNT	Environmental Charge	51	1608313178	EXP	0.00			0			N	0	N
+ACCNT	Environmental Charge:Sewer Expense	63	1608323473	EXP	"1,044.08"			0			N	0	N
+ACCNT	Environmental Charge:Waste Management	52	1608313179	EXP	"9,976.37"			0			N	0	N
+ACCNT	Hood cleaning	69	1618329734	EXP	"1,050.00"			0			N	0	N
+ACCNT	Inspection Expense	97	1702307747	EXP	150.00			0			N	0	N
+ACCNT	Insurance Expense	18	1429212080	EXP	"36,056.08"	Insurance expenses	63300	310			N	0	N
+ACCNT	Interest Expense	60	1608315783	EXP	0.00			0			N	0	N
+ACCNT	Market facilitator service fee	64	1608323544	EXP	0.00			0			N	0	N
+ACCNT	Meals and Entertainment	48	1608305567	EXP	"8,253.44"			0			N	0	N
+ACCNT	Menu	35	1607725422	EXP	0.00			0			N	0	N
+ACCNT	Merchant Account Fees	11	1429212080	EXP	"11,628.03"	"Credit card merchant account discount fees, transaction fees, and related costs"	51800	496			N	0	N
+ACCNT	Miscellaneous	39	1608220586	EXP	"21,357.69"			0			N	0	N
+ACCNT	Mobile Expense	53	1608313464	EXP	415.21			0			N	0	N
+ACCNT	Office Supplies	19	1429212080	EXP	780.52	Office supplies expense	64900	313			N	0	N
+ACCNT	Online Order Service Fee	72	1622128720	EXP	"15,180.55"			0			N	0	N
+ACCNT	Payroll Expenses	30	1429212085	EXP	"1,092,147.17"	Payroll expenses	66000	297			N	0	N
+ACCNT	Penalty	76	1646844290	EXP	0.00			0			N	0	N
+ACCNT	Personal Expenses	98	1702307912	EXP	"6,037.93"			0			N	0	N
+ACCNT	Pest Control	55	1608314232	EXP	"4,309.35"			0			N	0	N
+ACCNT	Phone and Internet	71	1622128335	EXP	"8,245.67"			0			N	0	N
+ACCNT	Printing	70	1622054878	EXP	"2,720.00"			0			N	0	N
+ACCNT	Professional Fees	20	1429212080	EXP	"13,012.00"	Payments to accounting professionals and attorneys for accounting or legal services	66700	298			N	0	N
+ACCNT	Rent Expense	21	1429212080	EXP	"54,834.84"	Rent paid for company offices or other structures used in the business	67100	300			N	0	N
+ACCNT	Repairs and Maintenance	22	1429212080	EXP	"35,436.14"	Incidental repairs and maintenance of business assets that do not add to the value or appreciably prolong its life	67200	315			N	0	N
+ACCNT	Restaurant Supplies	12	1429212080	EXP	"58,516.05"	"Supplies purchased for restaurant operations. Includes dishes, cookware, and other items not classified as inventory or fixed assets"	53100	496			N	0	N
+ACCNT	Sales Tax Expense	92	1679330627	EXP	"41,939.17"			0			N	0	N
+ACCNT	Sales Tax Expense:Hospitality Tax	91	1679330393	EXP	"19,365.90"			0			N	0	N
+ACCNT	Sales Tax Expense:Sales & Use Tax	85	1675190541	EXP	"41,324.51"			0			N	0	N
+ACCNT	Service Fee	56	1608314375	EXP	295.12			0			N	0	N
+ACCNT	Shipping Expense	58	1608314926	EXP	183.81			0			N	0	N
+ACCNT	Supply	36	1607966294	EXP	473.64			0			N	0	N
+ACCNT	Tax	74	1622132629	EXP	0.00			0			Y	0	N
+ACCNT	TAX EXPENSE	88	1675274402	EXP	"73,188.17"	TAX EXPENSE		0			N	0	N
+ACCNT	Travel	59	1608315618	EXP	"1,144.28"			0			N	0	N
+ACCNT	Uniforms	24	1429212080	EXP	0.00	Uniforms for employees and contractors	68500	302			N	0	N
+ACCNT	Utilities	25	1429212080	EXP	"77,548.20"	"Water, electricity, garbage, and other basic utilities expenses"	68600	318			N	0	N
+ACCNT	Utilities:Water	82	1660744640	EXP	"4,789.60"			0			N	0	N
+ACCNT	Cashback	96	1701721115	EXINC	-13.36			0			N	0	N
+ACCNT	Credit Card Cash Back Rewards	90	1679066766	EXINC	-500.00			0			N	0	N
+ACCNT	Forgiveness income	75	1645805755	EXINC	"-37,289.00"			0			N	0	N
+ACCNT	Ask My Client	26	1429212081	EXEXP	"390,207.94"		80000	0			N	0	N
+!QB ONLINE	ACCNT	OLBANKID	ROUTNUM	OLACCNT	OLFEDID	ACCNTTYPE	OLBANKING	OLBILLPAY	OLENABLED	OLTAB
+QB ONLINE	BOA Chk - 3734	11162	053904483	223018543734	pandacolumbia	CHECKING	Y	N	Y	Y
+QB ONLINE	Capital One - 4122	7492	000000000	4122		CCARD	Y	N	Y	Y
+QB ONLINE	Capital One - 4510	7492	000000000	4510		CCARD	Y	N	Y	Y
+!CUSTNAMEDICT	INDEX	LABEL	CUSTOMER	VENDOR	EMPLOYEE
+!ENDCUSTNAMEDICT
+CUSTNAMEDICT	0		N	N	N
+CUSTNAMEDICT	1		N	N	N
+CUSTNAMEDICT	2		N	N	N
+CUSTNAMEDICT	3		N	N	N
+CUSTNAMEDICT	4		N	N	N
+CUSTNAMEDICT	5		N	N	N
+CUSTNAMEDICT	6		N	N	N
+CUSTNAMEDICT	7		N	N	N
+CUSTNAMEDICT	8		N	N	N
+CUSTNAMEDICT	9		N	N	N
+CUSTNAMEDICT	10		N	N	N
+CUSTNAMEDICT	11		N	N	N
+CUSTNAMEDICT	12		N	N	N
+CUSTNAMEDICT	13		N	N	N
+CUSTNAMEDICT	14		N	N	N
+CUSTNAMEDICT	15		N	N	N
+CUSTNAMEDICT	16		N	N	N
+CUSTNAMEDICT	17		N	N	N
+CUSTNAMEDICT	18		N	N	N
+CUSTNAMEDICT	19		N	N	N
+CUSTNAMEDICT	20		N	N	N
+CUSTNAMEDICT	21		N	N	N
+CUSTNAMEDICT	22		N	N	N
+CUSTNAMEDICT	23		N	N	N
+CUSTNAMEDICT	24		N	N	N
+CUSTNAMEDICT	25		N	N	N
+CUSTNAMEDICT	26		N	N	N
+CUSTNAMEDICT	27		N	N	N
+CUSTNAMEDICT	28		N	N	N
+CUSTNAMEDICT	29		N	N	N
+ENDCUSTNAMEDICT
+!CUST	NAME	REFNUM	TIMESTAMP	BADDR1	BADDR2	BADDR3	BADDR4	BADDR5	SADDR1	SADDR2	SADDR3	SADDR4	SADDR5	PHONE1	PHONE2	FAXNUM	EMAIL	NOTE	CONT1	CONT2	CTYPE	TERMS	TAXABLE	SALESTAXCODE	LIMIT	RESALENUM	REP	TAXITEM	NOTEPAD	SALUTATION	COMPANYNAME	FIRSTNAME	MIDINIT	LASTNAME	CUSTFLD1	CUSTFLD2	CUSTFLD3	CUSTFLD4	CUSTFLD5	CUSTFLD6	CUSTFLD7	CUSTFLD8	CUSTFLD9	CUSTFLD10	CUSTFLD11	CUSTFLD12	CUSTFLD13	CUSTFLD14	CUSTFLD15	JOBDESC	JOBTYPE	JOBSTATUS	JOBSTART	JOBPROJEND	JOBEND	HIDDEN	DELCOUNT	PRICELEVEL
+CUST	Merchant Service	17	1607724993	Merchant Service																			Y	Tax																												0				N	0	
+CUST	Preferred Rewards	238	1702044323	Preferred Rewards																			Y	Tax																												0				N	0	
+CUST	Uber	201	1699544694	Uber																			Y	Tax				Out of State																								0				N	0	
+!VEND	NAME	REFNUM	TIMESTAMP	PRINTAS	ADDR1	ADDR2	ADDR3	ADDR4	ADDR5	VTYPE	CONT1	CONT2	PHONE1	PHONE2	FAXNUM	EMAIL	NOTE	TAXID	LIMIT	TERMS	NOTEPAD	SALUTATION	COMPANYNAME	FIRSTNAME	MIDINIT	LASTNAME	CUSTFLD1	CUSTFLD2	CUSTFLD3	CUSTFLD4	CUSTFLD5	CUSTFLD6	CUSTFLD7	CUSTFLD8	CUSTFLD9	CUSTFLD10	CUSTFLD11	CUSTFLD12	CUSTFLD13	CUSTFLD14	CUSTFLD15	1099	HIDDEN	DELCOUNT
+VEND	3WLiners	225	1699553352		3WLiners																																					N	N	0
+VEND	704 Korean BBQ	170	1679072990		704 Korean BBQ																																					N	N	0
+VEND	88 Oriental Market	84	1622129674		88 Oriental Market																																					N	N	0
+VEND	92 Chicken	220	1699552933		92 Chicken																																					N	N	0
+VEND	99 Burnin BBQ	221	1699552968		99 Burnin BBQ																																					N	N	0
+VEND	A-1	31	1607982802		A-1																																					N	N	0
+VEND	A&D	21	1607966756		A&D																																					N	N	0
+VEND	Advance Auto Parts	107	1660691024		Advance Auto Parts																																					N	N	0
+VEND	Aeil Insurance	262	1721141011		Aeil Insurance																																					N	N	0
+VEND	ALDI	70	1608314939		ALDI																																					N	N	0
+VEND	Aliexpress	112	1660747332		Aliexpress																																					N	N	0
+VEND	Alliance	19	1607965996		Alliance																																					N	N	0
+VEND	Amazon	34	1608219721		Amazon																																					N	N	0
+VEND	American Express DES	99	1660666400		American Express DES																																					N	N	0
+VEND	Apollo Food	115	1661265442		Apollo Food																																					N	N	0
+VEND	APPLE STORE	119	1661280465		APPLE STORE																																					N	N	0
+VEND	APPLE.COM/BILL	118	1661280373		APPLE.COM/BILL																																					N	N	0
+VEND	Arirang Korean Restaurant	239	1702307517		Arirang Korean Restaurant																																					N	N	0
+VEND	Asian Market	85	1622129717		Asian Market																																					N	N	0
+VEND	Athene Annuity	263	1721141045		Athene Annuity																																					N	N	0
+VEND	ATT	52	1608313491		ATT																																					N	N	0
+VEND	AUNTIE ANNE'S	136	1675200636		AUNTIE ANNE'S																																					N	N	0
+VEND	Aurora Consulting	255	1712928683		Aurora Consulting																																					N	N	0
+VEND	AVIATION PARKING	158	1675260442		AVIATION PARKING																																					N	N	0
+VEND	Baker Distributing	93	1638209510		Baker Distributing																																					N	N	0
+VEND	Bank of America	104	1660689554		Bank of America																																					N	N	0
+VEND	BCBS MARKETPLACE	133	1675200399		BCBS MARKETPLACE																																					N	N	0
+VEND	Bearing Distributors	179	1687205498		Bearing Distributors																																					N	N	0
+VEND	Bed Bath & Beyond	181	1687205923		Bed Bath & Beyond																																					N	N	0
+VEND	Beyondmenu	45	1608308555		Beyongmenu																																					N	N	0
+VEND	Big Air Trampoline Park	172	1679073615		Big Air Trampoline Park																																					N	N	0
+VEND	BLY The Wood Florist	101	1660688629		BLY The Wood Florist																																					N	N	0
+VEND	BOA PPP	83	1609176459		BOA PPP																																					N	N	0
+VEND	Boost Mobile	82	1608316832		Boost Mobile																																					N	N	0
+VEND	Burger King	44	1608244642		Burger King																																					N	N	0
+VEND	Capital One	24	1607977749		Capital One																																					N	N	0
+VEND	Capital Supply of Columbia	202	1699547258		Capital Supply of Columbia																																					N	N	0
+VEND	Capital Waste Service	48	1608308926		Capital Waste Service																																					N	N	0
+VEND	Caraway	29	1607980872		Caraway																																					N	N	0
+VEND	Carolina Pressure and Softwashing	258	1717450403		Carolina Pressure and Softwashing																																					N	N	0
+VEND	Carters	211	1699551940		Carters																																					N	N	0
+VEND	Cash Withdrawal	176	1687198947		Cash Withdrawal																																					N	N	0
+VEND	CDOT	192	1687208086		CDOT																																					N	N	0
+VEND	Central Rest Products	91	1630524470		Central Rest Products																																					N	N	0
+VEND	Chefstore	39	1608243813		Chefstore																																					N	N	0
+VEND	Cheung Kong Hold	33	1608147333		Cheung Kong Hold																																					N	N	0
+VEND	Chickfila	56	1608313749		Chickfila																																					N	N	0
+VEND	Chinesetg Inc	18	1607725412		Chinesetg Inc																																					N	N	0
+VEND	Christian Dior Inc	243	1702307894		Christian Dior Inc																																					N	N	0
+VEND	CICI PIZZA	144	1675201509		CICI PIZZA																																					N	N	0
+VEND	Circle K	60	1608314286		Circle K																																					N	N	0
+VEND	City of Columbia	28	1607978303		City of Columbia																																					N	N	0
+VEND	City of Philadelphia	184	1687207378		City of Philadelphia																																					N	N	0
+VEND	Coca Cola	25	1607977799		Coca Cola																																					N	N	0
+VEND	Costco	40	1608244555		Costco																																					N	N	0
+VEND	Costco Gas	111	1660743637		Costco Gas																																					N	N	0
+VEND	Cracker Barrel	178	1687204194		Cracker Barrel																																					N	N	0
+VEND	Cricket Wireless	47	1608308737		Cricket Wireless																																					N	N	0
+VEND	Croach	59	1608314222		Croach																																					N	N	0
+VEND	Cromers Retail	108	1660691227		Cromers Retail																																					N	N	0
+VEND	CVS	189	1687207656		CVS																																					N	N	0
+VEND	D&B COLUMBIA	132	1675200343		D&B COLUMBIA																																					N	N	0
+VEND	Dai Sing Restaurant Supply	244	1704482660		Dai Sing Restaurant Supply																																					N	N	0
+VEND	DELEON	78	1608315964		DELEON																																					N	N	0
+VEND	DERMATOLOGY	156	1675259952		DERMATOLOGY																																					N	N	0
+VEND	DICK SMITH FORD PAINT	151	1675259561		DICK SMITH FORD PAINT																																					N	N	0
+VEND	DISCOUNT TIRE	145	1675201556		DISCOUNT TIRE																																					N	N	0
+VEND	DISCOVERY PLACE	162	1675261632		DISCOVERY PLACE																																					N	N	0
+VEND	DN	30	1607982572		DN																																					N	N	0
+VEND	Dollar Car Rental	254	1711127030		Dollar Car Rental																																					N	N	0
+VEND	Dollar General	58	1608314198		Dollar General																																					N	N	0
+VEND	Dollar Tree	54	1608313660		Dollar Tree																																					N	N	0
+VEND	Dominion Energy	87	1622129766		Dominion energy																																					N	N	0
+VEND	Domino's	261	1718643628		Domino's																																					N	N	0
+VEND	DoorDash	16	1607724942		DoorDash																																					N	N	0
+VEND	Dry Tech Waterproofing	217	1699552790		Dry Tech Waterproofing																																					N	N	0
+VEND	E&D Enterprise	79	1608316564		E&D Enterprise																																					N	N	0
+VEND	eBay	106	1660690777		eBay																																					N	N	0
+VEND	ENTERPRISE RENT - CAR	153	1675259681		ENTERPRISE RENT - CAR																																					N	N	0
+VEND	Expedia	223	1699553148		Expedia																																					N	N	0
+VEND	Express Drains	214	1699552483		Express Drains																																					N	N	0
+VEND	Exxon	51	1608313438		Exxon																																					N	N	0
+VEND	Family Dollar	98	1645480253		Family Dollar																																					N	N	0
+VEND	Feng Food Trading	23	1607966878		Fend Food Trading																																					N	N	0
+VEND	FINANCE CHARGE	161	1675261182		FINANCE CHARGE																																					N	N	0
+VEND	FL Lead Dust Inspection	241	1702307748		FL Lead Dust Inspection																																					N	N	0
+VEND	Food Lion	74	1608314983		Food Lion																																					N	N	0
+VEND	Frontier Airline	75	1608315572		Frontier Airline																																					N	N	0
+VEND	FSI SCE&G	46	1608308693		FSI SCE&G																																					N	N	0
+VEND	Funny BBQ	252	1711126773		Funny BBQ																																					N	N	0
+VEND	GEICO	155	1675259834		GEICO																																					N	N	0
+VEND	Ginza Buffet	249	1711126572		Ginza Buffet																																					N	N	0
+VEND	Golden Corral	229	1699553926		Golden Corral																																					N	N	0
+VEND	Gong Cha	198	1687208637		Gong Cha																																					N	N	0
+VEND	Google Store	105	1660690450		Google Store																																					N	N	0
+VEND	Great wall supermarket	86	1622129732		Great wall supermarket																																					N	N	0
+VEND	GYU - KAKU JAPANESE BBQ	138	1675200752		GYU - KAKU JAPANESE BBQ																																					N	N	0
+VEND	H D	20	1607966255		H D																																					N	N	0
+VEND	HAAGEN DAZS	148	1675259110		HAAGEN DAZS																																					N	N	0
+VEND	Han Feng	12	1607724177		Han Feng																																					N	N	0
+VEND	Hard Knox Waterproofing	205	1699549999		Hard Knox Waterproofing																																					N	N	0
+VEND	HELLO MOBILE	128	1675198450		HELLO MOBILE																																					N	N	0
+VEND	Hiltons Power Equipment	206	1699550425		Hiltons Power Equipment																																					N	N	0
+VEND	Holiday Photo	174	1679584452		Holiday Photo																																					N	N	0
+VEND	Hollywood Heroes	209	1699551768		Hollywood Heroes																																					N	N	0
+VEND	Home Depot	68	1608314897		Home Depot																																					N	N	0
+VEND	Hyundai Orientl Groce	77	1608315659		Hyundai																																					N	N	0
+VEND	Ice-Ice Genie inc	247	1711120346		Ice-Ice Genie inc																																					N	N	0
+VEND	IKEA	150	1675259223		IKEA																																					N	N	0
+VEND	International Supermarket	49	1608313204		International Supermarket																																					N	N	0
+VEND	Jasmine Buffet	199	1687208681		Jasmine Buffet																																					N	N	0
+VEND	Jason Dave	175	1687193756		Jason Dave																																					N	N	0
+VEND	Jiffy Lube	182	1687206635		Jiffy Lube																																					N	N	0
+VEND	Joe Hudsons Collision	193	1687208108		Joe Hudsons Collision																																					N	N	0
+VEND	K-Pot Korean BBQ	251	1711126711		K-Pot Korean BBQ																																					N	N	0
+VEND	Key Changes Therapy	186	1687207542		Key Changes																																					N	N	0
+VEND	Kroger	42	1608244602		Kroger																																					N	N	0
+VEND	Kroger Fuel	53	1608313636		Kroger Fuel																																					N	N	0
+VEND	Kung Fu Tea	213	1699552395		Kung Fu Tea																																					N	N	0
+VEND	Labcorp	171	1679073357		Labcorp																																					N	N	0
+VEND	LEGO SOUTHPARK	139	1675200872		LEGO SOUTHPARK																																					N	N	0
+VEND	LETS MEAT KBBQ	141	1675200980		LETS MEAT KBBQ																																					N	N	0
+VEND	LIDL	120	1661281389		LIDL																																					N	N	0
+VEND	LMC PHY PRACTICES	143	1675201157		LMC PHY PRACTICES																																					N	N	0
+VEND	Long&Foster Real Estate	89	1630523308		Long&Foster Real Estate																																					N	N	0
+VEND	LONGHORN STEAK	146	1675201582		LONGHORN STEAK																																					N	N	0
+VEND	Loose Moose	208	1699551651		Loose Moose																																					N	N	0
+VEND	Loves	200	1687208713		Loves																																					N	N	0
+VEND	Lowe's Home Improvement	13	1607724192		Lowes																																					N	N	0
+VEND	Macys	245	1704821783		Macys																																					N	N	0
+VEND	Magnolia Buffet	194	1687208192		Magnolia Buffet																																					N	N	0
+VEND	Marshalls	232	1700059678		Marshalls																																					N	N	0
+VEND	Matcha Cafe	230	1699553944		Matcha Cafe																																					N	N	0
+VEND	McDonalds	61	1608314296		Mcdonld																																					N	N	0
+VEND	Merchant Service DISC	32	1608147228		Merchant Service DISC																																					N	N	0
+VEND	Midlands Toyota	147	1675259004		Midlands Toyota																																					N	N	0
+VEND	Migali Industries	246	1711119441		Migali Industries																																					N	N	0
+VEND	MIGUO BUBBLE TEA	159	1675260607		MIGUO BUBBLE TEA																																					N	N	0
+VEND	Miniso	222	1699553112		Miniso																																					N	N	0
+VEND	Moa Korean BBQ	191	1687208054		Moa Korean BBQ																																					N	N	0
+VEND	MR TOKYO JAPANESE RESTAURANT	160	1675260657		MR TOKYO JAPANESE RESTAURANT																																					N	N	0
+VEND	MSPBNA (Morgan Stanley Private Bank)	123	1675186041		MSPBNA																																					N	N	0
+VEND	Murphy express	43	1608244635		Murphy express																																					N	N	0
+VEND	MUSC COLUMBIA	142	1675201031		MUSC COLUMBIA																																					N	N	0
+VEND	Nationwide	207	1699551599		Nationwide																																					N	N	0
+VEND	nc des	165	1675714594		nc des																																					N	N	0
+VEND	Netflix	131	1675199027		Netflix																																					N	N	0
+VEND	New Asia Market	50	1608313214		New Asia Market																																					N	N	0
+VEND	New Sun Wah	26	1607977880		New Sun Wah																																					N	N	0
+VEND	Nike	256	1713386392		Nike																																					N	N	0
+VEND	NORDSTROM	137	1675200709		NORDSTROM																																					N	N	0
+VEND	OPC	185	1687207426		OPC																																					N	N	0
+VEND	Original Pancake House	231	1699554047		Original Pancake House																																					N	N	0
+VEND	Palmetto Utilities	66	1608314670		Palmetto Utilities																																					N	N	0
+VEND	Panda Chinese Restaurant	110	1660691536		Panda Chinese Restaurant																																					N	N	0
+VEND	Petsmart	235	1700059857		Petsmart																																					N	N	0
+VEND	Philadelphia Gas Works	260	1718643602		Philadelphia Gas Works																																					N	N	0
+VEND	Pho	62	1608314315		Pho																																					N	N	0
+VEND	PHO HOA RESTAURANT	135	1675200574		PHO HOA RESTAURANT																																					N	N	0
+VEND	Pho Viet	197	1687208518		Pho Viet																																					N	N	0
+VEND	PONKO CHICKEN	149	1675259175		PONKO CHICKEN																																					N	N	0
+VEND	Popeyes	57	1608313835		Popeyes																																					N	N	0
+VEND	PRISMA HEALTH	140	1675200931		PRISMA HEALTH																																					N	N	0
+VEND	PU UMG Dept. of Radiology	173	1679319646		PU UMG Dept. of Radiology																																					N	N	0
+VEND	Publix Super Market	11	1607724155		Publix Super Market																																					N	N	0
+VEND	Pull-A-Part	190	1687207703		Pull-A-Part																																					N	N	0
+VEND	Rack Room Shoes	212	1699551962		Rack Room Shoes																																					N	N	0
+VEND	RED LOBSTER	154	1675259785		RED LOBSTER																																					N	N	0
+VEND	Restaurant depot	97	1645480240		Restaurant depot																																					N	N	0
+VEND	Richland County Finance	117	1661280249		Richland County Finance																																					N	N	0
+VEND	Richland County Treasurer	80	1608316599		Richland County Treasurer																																					N	N	0
+VEND	River Buffet & Grill	215	1699552523		River Buffet & Grill																																					N	N	0
+VEND	ROBERTS TOWING AND TRAN	152	1675259622		ROBERTS TOWING AND TRAN																																					N	N	0
+VEND	Ross Stores	233	1700059702		Ross Stores																																					N	N	0
+VEND	Safe Food Instruction	177	1687201680		Safe Food Instruction																																					N	N	0
+VEND	Safeco Corporation	227	1699553509		Safeco Corporation																																					N	N	0
+VEND	Saks	237	1700059992		Saks																																					N	N	0
+VEND	Sams Club	14	1607724321		Sams Club																																					N	N	0
+VEND	Sarku Japan	72	1608314970		Sarku Japan																																					N	N	0
+VEND	SC Department of Employment and Workforce	3	1429213444																																							N	N	0
+VEND	SC Dept of Revenue Attn Withholding Dept	2	1429213411																																							N	N	0
+VEND	SC Financial Cntr Payment	259	1718643526		SC Financial Cntr Payment																																					N	N	0
+VEND	SC Water	88	1623445694		SC Water																																					N	N	0
+VEND	SC.GOV	67	1608314765		SC.GOV																																					N	N	0
+VEND	SCDHEC	81	1608316783		SCDHEC																																					N	N	0
+VEND	SCDOR	65	1608314504		SCDOR																																					N	N	0
+VEND	Sealand	22	1607966830		Sealand																																					N	N	0
+VEND	Seoul Food Meat Co	228	1699553567		Seoul Food Meat Co																																					N	N	0
+VEND	SERVICE FEE	130	1675198644		SERVICE FEE																																					N	N	0
+VEND	Severt & Sons Produce	109	1660691445		Severt & Sons Produce																																					N	N	0
+VEND	SG PRINTING	126	1675193343		SG PRINTING																																					N	N	0
+VEND	Shell Oil	90	1630524337		Shell Oil																																					N	N	0
+VEND	Shoplet	204	1699548822		Shoplet																																					N	N	0
+VEND	Sino	27	1607977942		Sino																																					N	N	0
+VEND	Sky Zone	250	1711126676		Sky Zone																																					N	N	0
+VEND	South Carolina State	234	1700059821		South Carolina State																																					N	N	0
+VEND	South Carolina Water	103	1660689245		South Carolina Water																																					N	N	0
+VEND	Spectrum	64	1608314407		Spectrum																																					N	N	0
+VEND	Spinx	180	1687205675		Spinx																																					N	N	0
+VEND	Spirit Airlines	240	1702307544		Spirit Airlines																																					N	N	0
+VEND	Starbucks	187	1687207585		Starbucks																																					N	N	0
+VEND	Stephen Bowen	248	1711122770		Stephen Bowen																																					N	N	0
+VEND	Sterling Optometry	188	1687207632		Sterling Optometry																																					N	N	0
+VEND	Stop Payment Fee	257	1714594370		Stop Payment Fee																																					N	N	0
+VEND	SUN CITY	127	1675193504		SUN CITY																																					N	N	0
+VEND	Super G	55	1608313739		Super G																																					N	N	0
+VEND	Super H Mart Inc	242	1702307868		Super H Mart Inc																																					N	N	0
+VEND	Sysco	92	1638199961		Sysco																																					N	N	0
+VEND	Target	63	1608314324		Target																																					N	N	0
+VEND	Temu	218	1699552809		Temu																																					N	N	0
+VEND	Ten Seconds Noodle	226	1699553388		Ten Seconds Noodle																																					N	N	0
+VEND	The UPS store	121	1661282508		The UPS store																																					N	N	0
+VEND	Thuan CHou	96	1640792504		Thuan CHou																																					N	N	0
+VEND	TIC TAC TOYS	134	1675200490		TIC TAC TOYS																																					N	N	0
+VEND	Tidal Wave	195	1687208228		Tidal Wave																																					N	N	0
+VEND	Tiffany & Co	183	1687206744		Tiffany & Co																																					N	N	0
+VEND	TJAR GROUP CORP	113	1661261621		TJAR GROUP CORP																																					N	N	0
+VEND	TJMAXX	71	1608314946		TJMAXX																																					N	N	0
+VEND	Tous Les Jours	210	1699551807		Tous Les Jours																																					N	N	0
+VEND	Toyota	76	1608315648		Toyota																																					N	N	0
+VEND	Toyota Auto Insurance	219	1699552852		Toyota Auto Insurance																																					N	N	0
+VEND	Toyota of Concord	216	1699552549		Toyota of Concord																																					N	N	0
+VEND	TRADER JOE'S	129	1675198557		TRADER JOE'S																																					N	N	0
+VEND	Triangle Accounting	15	1607724392		Triangle Accounting																																					N	N	0
+VEND	Uber Eats	236	1700059923		Uber Eats																																					N	N	0
+VEND	UHUI FRESH ( SAVANNAH SEAFOOD DELIVERLLC)	114	1661263074		UHUI FRESH(SAVANNAH SEAFOOD DELIVERYLLC)																																					N	N	0
+VEND	UNITED AIRLINES	157	1675260100		UNITED AIRLINES																																					N	N	0
+VEND	United Refrigeration	203	1699548327		United Refrigeration																																					N	N	0
+VEND	United States Treasury	1	1429213403																																							N	N	0
+VEND	US Foods	38	1608243793		US Foods																																					N	N	0
+VEND	US Liabilityinsurance	95	1640791704	US Liabilityinsurance	US Liabilityinsurance																																					N	N	0
+VEND	USPS	69	1608314920		USPS																																					N	N	0
+VEND	Walgreens	41	1608244595		Walgreens																																					N	N	0
+VEND	Walmart	36	1608243302		Walmart																																					N	N	0
+VEND	Wawa	253	1711126822		Wawa																																					N	N	0
+VEND	WeatherTech	224	1699553304		WeatherTech																																					N	N	0
+VEND	Wendys	73	1608314975		Wendys																																					N	N	0
+VEND	WESTIN PEACH TREE	164	1675262132		WESTIN PEACH TREE																																					N	N	0
+VEND	Yamibuy	102	1660688902		Yamibuy																																					N	N	0
+VEND	Yiding Hot Pot	196	1687208336		Yiding Hot Pot																																					N	N	0
+VEND	zelle	124	1675189437		zelle																																					N	N	0
+!EMP	NAME	REFNUM	TIMESTAMP	INIT	ADDR1	ADDR2	ADDR3	ADDR4	ADDR5	CITY	STATE	ZIP	SSNO	PHONE1	PHONE2	EMAIL	NOTE	NOTEPAD	FIRSTNAME	MIDINIT	LASTNAME	SALUTATION	CUSTFLD1	CUSTFLD2	CUSTFLD3	CUSTFLD4	CUSTFLD5	CUSTFLD6	CUSTFLD7	CUSTFLD8	CUSTFLD9	CUSTFLD10	CUSTFLD11	CUSTFLD12	CUSTFLD13	CUSTFLD14	CUSTFLD15	HIDDEN	DELCOUNT
+EMP	DE HUI FANG	7	1429213801		DE HUI FANG	4611 HARDSCRABBLE RD 107	"COLUMBIA, SC 29229"			COLUMBIA	SC	29229	109-84-6884						DE HUI		FANG																	N	0
+EMP	Good Dude	168	1675716630		Good Dude														Good		Dude																	N	0
+EMP	JI QIN FANG	4	1429213460		JI QIN FANG	103 WINDSOR CREST RD.	"COLUMBIA, SC 29229"			COLUMBIA	SC	29229	072-80-1907					"RAISES AND PROMOTIONS HISTORY\nFROM EMPLOYEE ORGANIZER\n==========================\nJob Title			: Current\nEffective Date		: 10/23/2017\nEnd Date			: \nCompensation Amount	: 16.00\nTarget Bonus		: \nPayroll Item		: Hourly\n--------------------------------------------------------\nJob Title			: \nEffective Date		: 08/12/2017\nEnd Date			: 10/22/2017\nCompensation Amount	: 7.50\nTarget Bonus		: \nPayroll Item		: Hourly\n--------------------------------------------------------\n"	JI QIN		FANG																	N	0
+EMP	KRISTY FANG	5	1429213614		KRISTY FANG	4611 HARDSCRABBLE RD 107	"COLUMBIA, SC 29229"			COLUMBIA	SC	29229	109-84-6833						KRISTY		FANG																	Y	0
+EMP	LiangPing Lin	122	1673387159		LiangPing Lin	221-29 Horace Harding expressway	"Flushing, NY 11364"			Flushing	NY	11364	064-80-1528						LiangPing		Lin																	N	0
+EMP	Qinyu Zheng	9	1508795734		Qinyu Zheng	135 Crimson Queen dr	"Blythewood, SC 29016"			Blythewood	SC	29016	100-84-4312					"RAISES AND PROMOTIONS HISTORY\nFROM EMPLOYEE ORGANIZER\n==========================\nJob Title			: Current\nEffective Date		: 10/23/2017\nEnd Date			: \nCompensation Amount	: 12.50\nTarget Bonus		: \nPayroll Item		: Hourly\n--------------------------------------------------------\n"	Qinyu		Zheng																	N	0
+EMP	Rex Dong	169	1675716970		Rex Dong														Rex		Dong																	N	0
+EMP	Tong Tong	8	1457653118		Tong Tong	507 Virginian Drive	"Norfolk, VA 23505"			Norfolk	VA	23505	699-09-2518						Tong		Tong																	Y	0
+EMP	YAN XIAN NI	6	1429213701		YAN XIAN NI	4611 SCRABBLE RD 107	"COLUMBIA, SC 29229"			COLUMBIA	SC	29229	053-82-6531					"RAISES AND PROMOTIONS HISTORY\nFROM EMPLOYEE ORGANIZER\n==========================\nJob Title			: Current\nEffective Date		: 10/23/2017\nEnd Date			: \nCompensation Amount	: 18.75\nTarget Bonus		: \nPayroll Item		: Hourly\n--------------------------------------------------------\nJob Title			: \nEffective Date		: 08/12/2017\nEnd Date			: 10/22/2017\nCompensation Amount	: 8.00\nTarget Bonus		: \nPayroll Item		: Hourly\n--------------------------------------------------------\n"	YAN XIAN		NI																	Y	0
+EMP	Yuting Zheng	10	1591636226		Yuting Zheng	14015 Holly Ave	Unit 4D	"Flushing, NY 11355"		Flushing	NY	11355	113-78-6813					"RAISES AND PROMOTIONS HISTORY\nFROM EMPLOYEE ORGANIZER\n==========================\nJob Title			: Current\nEffective Date		: 2021-07-12\nEnd Date			: \nCompensation Amount	: 42,000.00\nTarget Bonus		: \nPayroll Item		: Salary\n--------------------------------------------------------\n"	Yuting		Zheng																	N	0
