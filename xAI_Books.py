@@ -1,10 +1,17 @@
 import streamlit as st
+from streamlit_extras.stateful_button import button
 from app.utils import (streamlit_components,)
+from app.db import mongo_db
 
 streamlit_components.streamlit_ui('🐬🦣 AI Accounting 🍃🦭')
 # -----------------------------------------------------------------------------------------------------------
 tab1, tab2, tab3, tab4, tab5 = st.tabs(
-    ["Overview","Email Rule", "", "", ""])
+    ["Overview","Email Rule", "System Initialization", "", ""])
+
+with tab3:
+    if button("Extract from Email", key="button3"):
+        mongo_db.create_index()
+        st.success('System is ready for use. This function need only run once.')
 
 with tab1:
     st.write('''

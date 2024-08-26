@@ -13,7 +13,7 @@ def extract_pdf_lines(pdf_path):
                 })
     return extracted_lines
 
-# Example usage
-pdf_path = "BOA.pdf"  # Path to your PDF file
-extracted_data = extract_pdf_lines(pdf_path)
-print(extracted_data)  # Print extracted data to see the format
+# # Example usage
+# pdf_path = "BOA.pdf"  # Path to your PDF file
+# extracted_data = extract_pdf_lines(pdf_path)
+# print(extracted_data)  # Print extracted data to see the format
