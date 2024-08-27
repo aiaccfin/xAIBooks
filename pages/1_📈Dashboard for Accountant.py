@@ -1,7 +1,7 @@
 import streamlit as st, re, pandas as pd
 from streamlit_extras.stateful_button import button
 from app.utils import streamlit_components
-from app.llm.openai_api import return_vendor
+from app.llm.openai_api import return_vendor, return_vendor_and_coa
 
 streamlit_components.streamlit_ui('🦣 Dashboard for Accountant')
 
@@ -14,25 +14,22 @@ with tab3:
     if button("Extract from Email", key="button3"):    email_processing.email_extraction()
 
 with tab1:
-    if button("CC?", key="button1"):
+    if button("CC ?", key="button1"):
         pdf_path = "./data/bs/USA/Sample-Credit Card Statement-US/Credit Card-AmEx 91009-Tea Hill-2023/2023-01-09.pdf"
         extracted_data = pdf_processing.extract_pdf_lines(pdf_path)
         st.write(extracted_data)
 
-        if button("Regex?", key="button12"):
+        if button("Vendor ?", key="button12"):
             transactions = []
             for entry in extracted_data:
                 text = entry['text']
-                # Regex to match transaction lines (e.g., date and amount at the end)
-                # match = re.match(r'(\d{2}/\d{2}/\d{2}) (.+) (\d+,\d+\.\d{2})$', text)
-                # match = re.match(r'(\d{2}/\d{2}/\d{2}) (.+) (-?\$\d+,\d+\.\d{2})$', text)
                 match = re.match(r'(\d{2}/\d{2}/\d{2}) (.+) (-?\$\d{1,3}(?:,\d{3})*\.\d{2})$', text)
 
                 if match:
                     date, description, amount = match.groups()
                     amount = amount.replace('$', '')
                     amount = float(amount.replace(',', ''))
-                    vendor_name =     return_vendor(description)
+                    vendor_name  =     return_vendor(description)
 
                     transactions.append({
                         'clientID':'CC888',
