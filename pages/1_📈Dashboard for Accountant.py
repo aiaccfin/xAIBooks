@@ -1,6 +1,7 @@
-import streamlit as st, re
+import streamlit as st, re, pandas as pd
 from streamlit_extras.stateful_button import button
 from app.utils import streamlit_components
+from app.llm.openai_api import return_vendor
 
 streamlit_components.streamlit_ui('🦣 Dashboard for Accountant')
 
@@ -31,12 +32,22 @@ with tab1:
                     date, description, amount = match.groups()
                     amount = amount.replace('$', '')
                     amount = float(amount.replace(',', ''))
+                    vendor_name =     return_vendor(description)
+
                     transactions.append({
                         'clientID':'CC888',
                         'date': date,
                         'description': description,
-                        'amount': amount
+                        'amount': amount,
+                        'vendor_name': vendor_name
                     })
 
-            st.write(transactions)
+            df = pd.DataFrame(transactions)
+            df['vendor_name'] = df['vendor_name'].str.replace(r'^\s*Vendor Name:\s*', '',regex=True)  # Remove "Vendor Name:" prefix
+            df['vendor_name'] = df['vendor_name'].str.replace(r'\*\*', '',regex=True)  # Remove Markdown-style bold formatting
+            df['vendor_name'] = df['vendor_name'].str.replace(r'\"', '', regex=True)  # Remove extra quotation marks
+
+            df = df.drop(columns=['description'])
+            st.dataframe(df)
+
             mongo_db.save_to_cc(transactions)
