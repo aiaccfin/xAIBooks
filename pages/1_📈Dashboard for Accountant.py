@@ -19,7 +19,7 @@ with tab1:
         extracted_data = pdf_processing.extract_pdf_lines(pdf_path)
         st.write(extracted_data)
 
-        if button("Vendor ?", key="button12"):
+        if button("Vendor and COA?", key="button12"):
             transactions = []
             for entry in extracted_data:
                 text = entry['text']
@@ -30,33 +30,36 @@ with tab1:
                     amount = amount.replace('$', '')
                     amount = float(amount.replace(',', ''))
                     vendor_name  =     return_vendor(description)
+                    COA = return_coa(vendor_name)
 
                     transactions.append({
                         'clientID':'CC888',
                         'date': date,
                         'description': description,
                         'amount': amount,
-                        'vendor_name': vendor_name
+                        'vendor_name': vendor_name,
+                        'COA': COA
                     })
 
             df = pd.DataFrame(transactions)
             df['vendor_name'] = df['vendor_name'].str.replace(r'^\s*Vendor Name:\s*', '',regex=True)  # Remove "Vendor Name:" prefix
             df['vendor_name'] = df['vendor_name'].str.replace(r'\*\*', '',regex=True)  # Remove Markdown-style bold formatting
             df['vendor_name'] = df['vendor_name'].str.replace(r'\"', '', regex=True)  # Remove extra quotation marks
+            df['COA'] = df['COA'].str.replace(r'\"', '', regex=True)  # Remove extra quotation marks
 
             df = df.drop(columns=['description'])
             st.dataframe(df)
 
-            mongo_db.save_to_cc(transactions)
-
-            if button("COA ?", key="button13"):
-                for transaction in transactions:
-                    vendor_name = transaction.get('vendor_name')
-                    coa  =     return_coa(vendor_name)
-                    transaction['coa'] = coa
-
-                df = pd.DataFrame(transactions)
-                df = df.drop(columns=['description', '_id'])
-                st.dataframe(df)
-
-                mongo_db.save_to_cc(transactions)
+            # mongo_db.save_to_cc(transactions)
+            #
+            # if button("COA ?", key="button13"):
+            #     for transaction in transactions:
+            #         vendor_name = transaction.get('vendor_name')
+            #         coa  =     return_coa(vendor_name)
+            #         transaction['coa'] = coa
+            #
+            #     df = pd.DataFrame(transactions)
+            #     df = df.drop(columns=['description', '_id'])
+            #     st.dataframe(df)
+            #
+            #     mongo_db.save_to_cc(transactions)

@@ -5,22 +5,23 @@ from config.coa import coa_list
 
 def return_coa(description):
     user_content = f"""
-        You will be provided with a Vendor name. Your task is to find a Chart of Account (COA) in the given list closely associated with the vendor name. 
-
-        Return the COA without any labels like "COA" in your response.
+        Task: Identify the Chart of Account (COA) that best matches the provided Vendor Name from the given list.
         
-        The Vendor Name given to you is:
+        Instructions:
+        
+        Always return a COA that most closely matches the Vendor Name, even if it's not an exact match.
+        Provide only the COA description.
+        Do not include any labels like "COA" or "Vendor" 
         Vendor Name: "{description}"
         
-        The Chart of Account (COA) list is: {coa_list}
-        
+        COA List: {coa_list}        
     """
 
     # Make the API call using the variable
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo-0125",
+        model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": "You are a model trained to extract COA from Vendor name."},
+            {"role": "system", "content": "You are a model trained to link COA in the coa_list to Vendor name."},
             {"role": "user", "content": user_content}
         ]
     )
