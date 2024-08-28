@@ -1,7 +1,7 @@
 import streamlit as st, re, pandas as pd
 from streamlit_extras.stateful_button import button
 from app.utils import streamlit_components
-from app.llm.openai_api import return_vendor, return_vendor_and_coa
+from app.llm.openai_api import return_vendor, return_coa
 
 streamlit_components.streamlit_ui('🦣 Dashboard for Accountant')
 
@@ -48,3 +48,15 @@ with tab1:
             st.dataframe(df)
 
             mongo_db.save_to_cc(transactions)
+
+            if button("COA ?", key="button13"):
+                for transaction in transactions:
+                    vendor_name = transaction.get('vendor_name')
+                    coa  =     return_coa(vendor_name)
+                    transaction['coa'] = coa
+
+                df = pd.DataFrame(transactions)
+                df = df.drop(columns=['description', '_id'])
+                st.dataframe(df)
+
+                mongo_db.save_to_cc(transactions)
