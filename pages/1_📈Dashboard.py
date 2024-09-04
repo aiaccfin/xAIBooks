@@ -1,12 +1,11 @@
 import streamlit as st, re, pandas as pd
-from streamlit_extras.stateful_button import button
 from app.utils import streamlit_components
-from app.llm.openai_api import return_vendor, return_coa
-
 streamlit_components.streamlit_ui('🦣 Dashboard for Accountant')
 
+from streamlit_extras.stateful_button import button
+from app.llm.openai_api import return_vendor, return_coa
+
 from app.data_entry import email_processing, pdf_processing
-from app.db import mongo_db
 # -----------------------------------------------------------------------------------------------------------
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["Data Entry: CC", "Data Entry: Bank Statement", "Data Entry: Email", "Data Entry: Manual", "DB Structure"])
 
