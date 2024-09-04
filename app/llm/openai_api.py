@@ -73,3 +73,20 @@ def return_vendor(description):
     vendor_name = response.choices[0].message.content.strip()
     # st.write(f"{vendor_name}")
     return vendor_name
+
+
+
+def return_vendor_information(vendor_name):
+    prompt = f"Provide basic business information for the vendor '{vendor_name}'."
+
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a model trained to provide business information."},
+            {"role": "user", "content": prompt}
+        ]
+    )
+
+    # Assuming the API returns a structured response; otherwise, parse as needed
+    business_info = response.choices[0].message.content.strip()
+    return business_info

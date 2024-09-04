@@ -1,7 +1,9 @@
 import streamlit as st
 
 
+
 def streamlit_ui(main_title):
+    st.set_page_config(page_title='xAI Books '+main_title, page_icon="🚀", )
     st.title(main_title)  # not accepting default
 
     st.markdown("""

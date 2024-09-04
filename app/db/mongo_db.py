@@ -5,7 +5,8 @@ try:
     mongodb_client = pymongo.MongoClient(CFG["MONGO_STATEMENT_URI"])
     db = mongodb_client[CFG["DB_STATEMENT"]]
     collection_bank = db[CFG["COLLECTION_BANK"]]
-    collection_cc = db[CFG["COLLECTION_CC"]]
+    collection_cc   = db[CFG["COLLECTION_CC"]]
+    collection_vendor = db[CFG["COLLECTION_VENDOR"]]
     st.write("Connected to MongoDB successfully.")
 except Exception as e:
     print(f"Failed to connect to MongoDB: {e}")
@@ -22,6 +23,7 @@ def create_index():
         unique=True
     )
 
+    collection_vendor.create_index([('name', pymongo.ASCENDING)],   unique=True)
 
 def save_to_cc(data):
     try:
@@ -55,3 +57,12 @@ def check_mongodb_connection():
 
     except Exception as e:
         print(f"An error occurred: {e}")
+
+
+def save_vendor_information(vendor_name, business_info):
+    try:
+        collection_vendor.insert_one({
+            "name": vendor_name,
+            "information": business_info
+        })
+    except:pass
