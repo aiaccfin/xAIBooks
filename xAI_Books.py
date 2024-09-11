@@ -2,16 +2,16 @@ import streamlit as st
 
 from streamlit_extras.stateful_button import button
 from app.utils import (streamlit_components,)
+from app.db import db_handler
+
 streamlit_components.streamlit_ui('🐬🦣 xAI Books 🍃🦭')
+db_handler = db_handler.PGHandler()
 # -----------------------------------------------------------------------------------------------------------
 tab1, tab2, tab3, tab4, tab5 = st.tabs(
-    ["Overview","Email Rule", "System Initialization", "", ""])
+    ["Overview", "Email Rule", "System Initialization", "", ""])
 
 with tab3:
     if button("Initialization?", key="button3"):
-        from app.db import mongo_db
-
-        mongo_db.create_index()
         st.success('System is ready for use. This function need only run once.')
 
 with tab1:
@@ -52,8 +52,5 @@ with tab2:
             - Bank Statement: `./data/customerID/bs`
         6. Only retrieve emails from INBOX
         7. The retrieved emails will be moved to RETRIEVED Folder and keep them as is.
-
-
-
     ''')
 

@@ -7,7 +7,7 @@ from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from langchain_openai import OpenAIEmbeddings
 
-from ..db import db_handler
+from ..db import db_postgre
 
 
 def is_valid_postgresql_uri(uri):
@@ -56,5 +56,5 @@ def session_init():
     # Initialize DB_SCHEMA in session state
     if "DB_SCHEMA" not in st.session_state:
         st.session_state.DB_SCHEMA = []
-        table_info: str = db_handler.DatabaseHandler().get_db_schema()
+        table_info: str = db_handler.PGHandler().get_db_schema()
         st.session_state.DB_SCHEMA = table_info

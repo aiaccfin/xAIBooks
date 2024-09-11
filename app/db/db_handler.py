@@ -1,45 +1,74 @@
-"""
-Module Name: DatabaseHandler
-Author: Leo Reny
-Date: Jun 24, 2024
-Version: 1.0
-
-Description:
-This module defines the DatabaseHandler class, which manages database connections,
-retrieves basic table details from a PostgreSQL database, and saves these details to a CSV file.
-
-Classes:
-- DatabaseHandler: A class to handle database interactions and session state management.
-
-Methods:
-- __init__(self, db_uri): pass uri, save uri into session_state.
-- save_db_details(self): ----------------------------------- Saves the fetched table details to a CSV file and returns a unique ID.
-    └── get_basic_table_details(self): --------------------- Fetches basic details of tables in the 'public' schema.
-        └── connect_to_db(self): --------------------------- Establishes a connection to the PostgreSQL database.
-            └── _create_data_folder(self): ----------------- Creates a 'data' folder if it does not already exist.
-
-Usage:
-Instantiate the DatabaseHandler class with a database URI, 
-then call save_db_details to connect to the database, fetch table details, and save them to a CSV file.
-"""
-import os
 import streamlit as st
+import dotenv
+import pandas
+import json
 import psycopg2
-import pandas as pd
+from psycopg2 import sql
 
 
-class DatabaseHandler:
+from app.llm.openai_api import return_vendor, return_coa, return_vendor_information
+
+CFG = dotenv.dotenv_values(".env")
+
+
+class PGHandler:
 
     def __init__(self):
-        """
-        Establishes a connection to the PostgreSQL database using the provided URI
-        """
-        try:            
-            self.connection = psycopg2.connect(os.environ.get('POSTGRESQL_AI_URI'))  # Connect to the database
+        try:
+            self.connection = psycopg2.connect(CFG['POSTGRESQL_STATEMENT_URI'])  # Connect to the database
             self.cursor = self.connection.cursor()  # Initialize a cursor
+            self.create_table_if_not_exists()
         except Exception as e:
             st.error(f"Failed to connect to the database: {e}")
             raise
+
+    def create_table_if_not_exists(self):
+        try:
+            create_table_statement_cc = """
+                CREATE TABLE IF NOT EXISTS statement_cc (
+                    transaction_id SERIAL PRIMARY KEY,
+                    clientID VARCHAR(50) NOT NULL,
+                    date DATE NOT NULL,
+                    amount NUMERIC(12, 2) NOT NULL,
+                    vendor_name VARCHAR(255) NOT NULL,
+                    COA VARCHAR(255) NOT NULL
+                );
+            """
+
+            create_table_vendor = """
+                CREATE TABLE IF NOT EXISTS vendors (
+                    vendor_id SERIAL PRIMARY KEY,
+                    vendor_name VARCHAR(255) UNIQUE NOT NULL,
+                    business_info JSONB NOT NULL
+                );
+            """
+
+            self.cursor.execute(create_table_statement_cc)  # Execute the query
+            self.cursor.execute(create_table_vendor)  # Execute the query
+            self.connection.commit()  # Commit the transaction
+            st.success("Table 'transactions_cc' verified successfully.")
+        except Exception as e:
+            self.connection.rollback()  # Rollback the transaction on error
+            st.error(f"Error creating table: {e}")
+
+    def close(self):
+        """Call this method to close the cursor and connection when done."""
+        if self.cursor:
+            self.cursor.close()
+        if self.connection:
+            self.connection.close()
+
+    def get_coa_and_amount(self):
+        try:
+            select_query = """
+                SELECT COA, amount FROM transactions_cc;
+            """
+            self.cursor.execute(select_query)
+            data = self.cursor.fetchall()  # Fetch all the rows
+            return data
+        except Exception as e:
+            self.connection.rollback()
+            st.error(f"Error fetching data: {e}")
 
     def execute_sql(self, solution):
         try:
@@ -56,12 +85,6 @@ class DatabaseHandler:
             self.connection.close()
 
     def get_basic_table_details(self):
-        """ run once in global_initialization
-        Fetches basic details (table names, column names, and data types) of tables in the 'public' schema.
-
-        Returns:
-            list: A list of tuples containing table details.
-        """
 
         query = """
         SELECT
@@ -90,7 +113,7 @@ class DatabaseHandler:
         """
         try:
             tables_and_columns = self.get_basic_table_details()  # Fetch table details
-            df = pd.DataFrame(tables_and_columns, columns=['table_name', 'column_name', 'data_type'])
+            df = pandas.DataFrame(tables_and_columns, columns=['table_name', 'column_name', 'data_type'])
             df.to_csv('./data/db/TABLES_COLUMNS.CSV', index=False)  # Save details to CSV file
             table_info = ''
             for table in df['table_name']:
@@ -103,3 +126,51 @@ class DatabaseHandler:
         finally:
             self.cursor.close()
             self.connection.close()
+
+    def save_cc_postgres(self, transactions):
+        try:
+            for transaction in transactions:
+                insert_query = sql.SQL("""
+                    INSERT INTO statement_cc (clientID, date, amount, vendor_name, COA)
+                    VALUES (%s, %s, %s, %s, %s)
+                """)
+                self.cursor.execute(insert_query, (
+                    transaction['clientID'],
+                    transaction['date'],
+                    transaction['amount'],
+                    transaction['vendor_name'],
+                    transaction['COA']
+                ))
+            self.connection.commit()
+            st.success("Transactions saved to PostgreSQL!")
+        except Exception as e:
+            self.connection.rollback()
+            st.error(f"Failed to save transactions: {e}")
+        finally:
+            self.connection.close()  # Close connection when done
+
+    def save_vendor_if_not_exists(self, vendor_name):
+        try:
+            # Check if vendor already exists in the vendor table
+            select_query = """
+                SELECT vendor_name FROM vendors WHERE vendor_name = %s;
+            """
+            self.cursor.execute(select_query, (vendor_name,))
+            vendor = self.cursor.fetchone()
+
+            # If vendor does not exist, insert it
+            if not vendor:
+                # Fetch business info from an external source
+                business_info = json.dumps(return_vendor_information(vendor_name))
+                # Insert the new vendor into the vendors table
+                insert_query = """
+                    INSERT INTO vendors (vendor_name, business_info)
+                    VALUES (%s, %s);
+                """
+                self.cursor.execute(insert_query, (vendor_name, business_info))
+                self.connection.commit()
+            else:
+                st.info(f"Vendor '{vendor_name}' already exists.")
+        except Exception as e:
+            self.connection.rollback()
+            st.error(f"Error saving vendor information: {e}")
