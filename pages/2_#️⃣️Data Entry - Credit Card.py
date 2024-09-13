@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_extras.stateful_button import button
 
-import re, pandas
+import os, re, glob, pandas
 
 from app.db.db_handler import PGHandler
 from app.utils import streamlit_components
@@ -19,7 +19,16 @@ with tab1:
     if button("Load Credit Card Statement?", key='key1'):
         with st.spinner('Extracting Credit Card Statement...'):
 
-            pdf_path = "./data/bs/USA/Sample-Credit Card Statement-US/Credit Card-AmEx 91009-Tea Hill-2023/2023-02-06.pdf"
+            folder_path = "./data/xaibooks/cc"
+
+            pdf_files = glob.glob(os.path.join(folder_path, "*.pdf"))
+            pdf_files.sort(key=os.path.getmtime, reverse=True)
+
+            if pdf_files:
+                pdf_path = pdf_files[0]  # The latest file
+            else:
+                print("No PDF files found.")
+
             extracted_data = pdf_processing.extract_pdf_lines(pdf_path)
             st.write(extracted_data)
         st.success('Credit Card Statement Extracted!')
@@ -28,7 +37,7 @@ with tab1:
                 transactions = []
                 for entry in extracted_data:
                     text = entry['text']
-                    match = re.match(r'(\d{2}/\d{2}/\d{2}) (.+) (-?\$\d{1,3}(?:,\d{3})*\.\d{2})$', text)
+                    match = re.match(r'(\d{2}/\d{2}/\d{2})\*? (.+) (-?\$\d{1,3}(?:,\d{3})*\.\d{2})$', text)
 
                     if match:
                         date, description, amount = match.groups()

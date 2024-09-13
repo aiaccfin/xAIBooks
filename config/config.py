@@ -4,7 +4,7 @@ imap_ssl_port = 993
 username = "xaibooks@outlook.com"
 password = "IBM3600s"
 imap_server = "outlook.office365.com"
-attachments_dir = "data/xaibooks/receipts"
+attachments_dir = "data/xaibooks/cc"
 
 # pip install --upgrade certifi
 

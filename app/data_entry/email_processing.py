@@ -72,7 +72,7 @@ def email_extraction():
                                 filepath = os.path.join(cfg.attachments_dir, filename)
                                 with open(filepath, "wb") as f:
                                     f.write(part.get_payload(decode=True))
-                                st.write(f"Saved attachment: {filepath}")
+                                st.info(f"Saved attachment: {filepath}")
                 else:
                     # If the email is not multipart, it might be plain text
                     content_type = msg.get_content_type()

@@ -58,10 +58,28 @@ class PGHandler:
         if self.connection:
             self.connection.close()
 
+    def truncate_table(self, table_name):
+        try:
+            self.cursor.execute(sql.SQL("TRUNCATE TABLE {}").format(sql.Identifier(table_name)))
+            self.connection.commit()
+            st.success(f"Table {table_name} has been truncated.")
+        except Exception as e:
+            st.error(f"Failed to truncate the table: {e}")
+            self.connection.rollback()
+
+    def delete_table(self, table_name):
+        try:
+            self.cursor.execute(sql.SQL("DELETE FROM {}").format(sql.Identifier(table_name)))
+            self.connection.commit()
+            st.success(f"All records in table {table_name} have been deleted.")
+        except Exception as e:
+            st.error(f"Failed to delete records from the table: {e}")
+            self.connection.rollback()
+
     def get_coa_and_amount(self):
         try:
             select_query = """
-                SELECT COA, amount FROM transactions_cc;
+                SELECT COA, amount FROM statement_cc;
             """
             self.cursor.execute(select_query)
             data = self.cursor.fetchall()  # Fetch all the rows
@@ -69,6 +87,36 @@ class PGHandler:
         except Exception as e:
             self.connection.rollback()
             st.error(f"Error fetching data: {e}")
+
+    def get_coa_data(self):
+        try:
+            # Query to select the COA and amount
+            query = "SELECT COA, SUM(amount) as total_amount FROM statement_cc GROUP BY COA"
+            self.cursor.execute(query)
+
+            # Fetch data
+            data = self.cursor.fetchall()
+
+            # Create a pandas DataFrame from the fetched data
+            df = pandas.DataFrame(data, columns=['COA', 'total_amount'])
+            return df
+        except Exception as e:
+            raise Exception(f"Failed to retrieve data from the database: {e}")
+
+    def get_gl(self):
+        try:
+            # Query to select specific columns: date, description, COA, amount
+            query = "SELECT date, COA, amount FROM statement_cc"
+            self.cursor.execute(query)
+
+            # Fetch data
+            data = self.cursor.fetchall()
+
+            # Create a pandas DataFrame from the fetched data
+            df = pandas.DataFrame(data, columns=['date', 'COA', 'amount'])
+            return df
+        except Exception as e:
+            raise Exception(f"Failed to retrieve data from the database: {e}")
 
     def execute_sql(self, solution):
         try:

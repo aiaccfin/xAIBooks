@@ -12,6 +12,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(
 
 with tab3:
     if button("Initialization?", key="button3"):
+        db_handler.truncate_table('statement_cc')
         st.success('System is ready for use. This function need only run once.')
 
 with tab1:
