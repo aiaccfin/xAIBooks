@@ -8,7 +8,7 @@ st.image('./images/workflow.png')
 st.error('1. front end: Showing the whole Accounting Process ...')
 st.error('2. system design: clarify # of Red Flagged unfinished spots')
 st.error('3. front end: add links to the Lower Portion')
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["Trial Balance", "General Ledger", "", "","ChatBot"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["Trial Balance", "General Ledger", "Vendor List", "Raw Transactions","ChatBot"])
 # from app.db import mongo_db
 from app.db.db_handler import PGHandler
 pg_handler = PGHandler()
@@ -54,21 +54,30 @@ with tab2:
             st.subheader(f"`{coa}`")
             st.dataframe(df[df['COA'] == coa])
 
-#
-# with tab3:
-#     if button("Show Vendor Information ?", key="button13"):
-#         vendors = mongo_db.collection_vendor.find()
-#         for vendor in vendors:
-#             st.write(f"**Vendor Name**: {vendor['name']}")
-#             st.write(f"**Business Information**: {vendor['information']}")
-#             st.divider()
-#
-# with tab4:
-#     if button("Show Credit Card Transactions ?", key="button14"):
-#         data = list(mongo_db.collection_cc.find())
-#         df = pd.DataFrame(data)
-#         df.drop(columns=['_id', 'description'], inplace = True)
-#         st.dataframe(df)
+
+with tab3:
+    if button("Show Vendor Information ?", key="button13"):
+        vendors = pg_handler.get_vendors()
+        for vendor in vendors:
+            vendor_name, business_info = vendor
+            st.write(f"**Vendor Name**: {vendor_name}")
+            st.write(f"**Business Information**: {business_info}")
+            st.divider()
+
+        # vendors = mongo_db.collection_vendor.find()
+        # for vendor in vendors:
+        #     st.write(f"**Vendor Name**: {vendor['name']}")
+        #     st.write(f"**Business Information**: {vendor['information']}")
+        #     st.divider()
+
+with tab4:
+    if button("Show Raw Credit Card Transactions ?", key="button14"):
+        data = pg_handler.get_raw_cc()
+
+        columns = [desc[0] for desc in pg_handler.cursor.description]
+        df = pd.DataFrame(data, columns=columns)
+        # df.drop(columns=['_id', 'description'], inplace = True)
+        st.dataframe(df)
 
 with tab5:
     st.error('''

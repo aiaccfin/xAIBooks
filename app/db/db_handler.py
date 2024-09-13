@@ -29,6 +29,7 @@ class PGHandler:
                     transaction_id SERIAL PRIMARY KEY,
                     clientID VARCHAR(50) NOT NULL,
                     date DATE NOT NULL,
+                    description VARCHAR(255),
                     amount NUMERIC(12, 2) NOT NULL,
                     vendor_name VARCHAR(255) NOT NULL,
                     COA VARCHAR(255) NOT NULL
@@ -118,6 +119,33 @@ class PGHandler:
         except Exception as e:
             raise Exception(f"Failed to retrieve data from the database: {e}")
 
+    def get_vendors(self):
+        try:
+            # Execute the query to get vendor data
+            self.cursor.execute("SELECT vendor_name, business_info FROM vendors")
+            vendors = self.cursor.fetchall()
+
+            # Return the vendor data
+            return vendors
+
+        except Exception as e:
+            st.error(f"Error fetching vendors: {e}")
+            return []
+
+    def get_raw_cc(self):
+        try:
+            # Query to select specific columns: date, description, COA, amount
+            query = "SELECT * FROM statement_cc"
+            self.cursor.execute(query)
+
+            # Fetch data
+            data = self.cursor.fetchall()
+
+            return data
+        except Exception as e:
+            raise Exception(f"Failed to retrieve data from the database: {e}")
+
+
     def execute_sql(self, solution):
         try:
             _,final_query,_ = solution.split("```")
@@ -179,12 +207,13 @@ class PGHandler:
         try:
             for transaction in transactions:
                 insert_query = sql.SQL("""
-                    INSERT INTO statement_cc (clientID, date, amount, vendor_name, COA)
-                    VALUES (%s, %s, %s, %s, %s)
+                    INSERT INTO statement_cc (clientID, date, description, amount, vendor_name, COA)
+                    VALUES (%s, %s, %s, %s, %s, %s)
                 """)
                 self.cursor.execute(insert_query, (
                     transaction['clientID'],
                     transaction['date'],
+                    transaction['description'],
                     transaction['amount'],
                     transaction['vendor_name'],
                     transaction['COA']

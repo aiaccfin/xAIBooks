@@ -32,6 +32,7 @@ with tab1:
             extracted_data = pdf_processing.extract_pdf_lines(pdf_path)
             st.write(extracted_data)
         st.success('Credit Card Statement Extracted!')
+
         if button("Process for Vendor and COA?", key='key2'):
             with st.spinner('AI analyzing vendor and COA...'):
                 transactions = []
@@ -65,7 +66,7 @@ with tab1:
                 df['vendor_name'] = df['vendor_name'].str.replace(r'\"', '', regex=True)  # Remove extra quotation marks
                 df['COA'] = df['COA'].str.replace(r'\"', '', regex=True)  # Remove extra quotation marks
 
-                df = df.drop(columns=['description'])
+                # df = df.drop(columns=['description'])
                 st.dataframe(df)
 
                 pg_handler.save_cc_postgres(transactions)
