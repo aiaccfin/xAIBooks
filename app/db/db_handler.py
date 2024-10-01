@@ -6,7 +6,7 @@ import psycopg2
 from psycopg2 import sql
 
 
-from app.llm.openai_api import return_vendor, return_coa, return_vendor_information
+from app.llm.openai_api import get_vendor, get_coa, get_vendor_information
 
 CFG = dotenv.dotenv_values(".env")
 
@@ -24,6 +24,8 @@ class PGHandler:
 
     def create_table_if_not_exists(self):
         try:
+
+
             create_table_statement_cc = """
                 CREATE TABLE IF NOT EXISTS statement_cc (
                     transaction_id SERIAL PRIMARY KEY,
@@ -43,6 +45,22 @@ class PGHandler:
                     business_info JSONB NOT NULL
                 );
             """
+
+
+            create_table_vendor = """
+                CREATE TABLE IF NOT EXISTS journal_entries_cc (
+                    id SERIAL PRIMARY KEY,
+                    clientID VARCHAR(50),
+                    date DATE ,
+                    description TEXT ,
+                    amount NUMERIC(10, 2) ,
+                    debit_account VARCHAR(50) ,
+                    credit_account VARCHAR(50) ,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            """
+
+
 
             self.cursor.execute(create_table_statement_cc)  # Execute the query
             self.cursor.execute(create_table_vendor)  # Execute the query
@@ -226,6 +244,7 @@ class PGHandler:
         finally:
             self.connection.close()  # Close connection when done
 
+
     def save_vendor_if_not_exists(self, vendor_name):
         try:
             # Check if vendor already exists in the vendor table
@@ -238,7 +257,7 @@ class PGHandler:
             # If vendor does not exist, insert it
             if not vendor:
                 # Fetch business info from an external source
-                business_info = json.dumps(return_vendor_information(vendor_name))
+                business_info = json.dumps(get_vendor_information(vendor_name))
                 # Insert the new vendor into the vendors table
                 insert_query = """
                     INSERT INTO vendors (vendor_name, business_info)
@@ -251,3 +270,27 @@ class PGHandler:
         except Exception as e:
             self.connection.rollback()
             st.error(f"Error saving vendor information: {e}")
+
+
+    def save_cc_journal_postgres(self, transactions):
+        try:
+            for transaction in transactions:
+                insert_query = sql.SQL("""
+                    INSERT INTO journal_entries_cc (clientID, date, description, amount, debit_account, credit_account)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                """)
+                self.cursor.execute(insert_query, (
+                    transaction['clientID'],
+                    transaction['date'],
+                    transaction['description'],
+                    transaction['amount'],
+                    transaction['debit_account'],
+                    transaction['credit_account']
+                ))
+            self.connection.commit()
+            st.success("Transactions saved to PostgreSQL!")
+        except Exception as e:
+            self.connection.rollback()
+            st.error(f"Failed to save transactions: {e}")
+        finally:
+            self.connection.close()  # Close connection when done

@@ -69,10 +69,13 @@ def email_extraction():
                                 filename = decode_header(filename)[0][0]
                                 if isinstance(filename, bytes):
                                     filename = filename.decode()
-                                filepath = os.path.join(cfg.attachments_dir, filename)
-                                with open(filepath, "wb") as f:
+                                filepath_cc = os.path.join(cfg.cc_attachments_dir, filename)
+                                filepath_bank = os.path.join(cfg.bank_attachments_dir, filename)
+                                with open(filepath_cc, "wb") as f:
                                     f.write(part.get_payload(decode=True))
-                                st.info(f"Saved attachment: {filepath}")
+                                with open(filepath_bank, "wb") as f:
+                                    f.write(part.get_payload(decode=True))
+                                st.info(f"Saved attachment: {filepath_cc}")
                 else:
                     # If the email is not multipart, it might be plain text
                     content_type = msg.get_content_type()
@@ -93,5 +96,5 @@ def email_extraction():
         # m.expunge()  # Permanently remove emails marked for deletion
 
         # Close the server connection
-        m.close()
-        m.logout()
+    m.close()
+    m.logout()

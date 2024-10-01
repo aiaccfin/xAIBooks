@@ -1,9 +1,11 @@
 import openai, streamlit as st
 client = openai.OpenAI()
+model = "gpt-4o"
+
 
 from config.coa import coa_list
 
-def return_coa(description):
+def get_coa(description):
     user_content = f"""
         Task: Identify the Chart of Account (COA) that best matches the provided Vendor Name from the given list.
         
@@ -19,7 +21,7 @@ def return_coa(description):
 
     # Make the API call using the variable
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=model,
         messages=[
             {"role": "system", "content": "You are a model trained to link COA in the coa_list to Vendor name."},
             {"role": "user", "content": user_content}
@@ -35,7 +37,7 @@ def return_coa(description):
     return coa
 
 
-def return_vendor(description):
+def get_vendor(description):
     user_content = f"""
            You will be provided with a transaction description. Your task is to extract two pieces of information:
            The vendor name, which is the name of the company or service in the description.
@@ -63,7 +65,7 @@ def return_vendor(description):
 
     # Make the API call using the variable
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo-0125",
+        model=model,
         messages=[
             {"role": "system", "content": "You are a model trained to extract vendor names from descriptions."},
             {"role": "user", "content": user_content}
@@ -75,12 +77,11 @@ def return_vendor(description):
     return vendor_name
 
 
-
-def return_vendor_information(vendor_name):
+def get_vendor_information(vendor_name):
     prompt = f"Provide basic business information for the vendor '{vendor_name}'."
 
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model=model,
         messages=[
             {"role": "system", "content": "You are a model trained to provide business information."},
             {"role": "user", "content": prompt}
@@ -90,3 +91,106 @@ def return_vendor_information(vendor_name):
     # Assuming the API returns a structured response; otherwise, parse as needed
     business_info = response.choices[0].message.content.strip()
     return business_info
+
+
+def get_journal_entry_cc(transaction):
+    prompt = f"""
+    I have this transaction {transaction} from a credit card statement that I need to record as journal entries. 
+    Each transaction includes the date, description, and amount. Please provide the journal entries in a structured format 
+    using the double-entry accounting method.  
+
+    Ensure to clearly state the accounts involved in the debit and credit entries without additional explanations.
+"""
+    try:
+        response = client.chat.completions.create(
+            model=model,
+            messages=[
+                {"role": "system",
+                 "content": "You are a model trained to book journal entries like a professional accountant."},
+                {"role": "user", "content": prompt}
+            ]
+        )
+
+        # Assuming the API returns a structured response; otherwise, parse as needed
+        journal_entry = response.choices[0].message.content.strip()
+
+        # Split the journal entry into separate lines if necessary
+        journal_entries = journal_entry.splitlines()
+        return journal_entries
+
+    except Exception as e:
+        # Handle exceptions, e.g., API errors
+        print(f"Error fetching journal entry: {e}")
+        return None
+
+
+def get_journal_entry_cc2(transaction):
+    prompt = f"""
+                I have this transaction {transaction} from a credit card statement that I need to record as journal entries. 
+                
+                please put them in one line using following format:
+                Date, Description, amount, Debit, Credit. Here is an example:
+                
+                Date: 09/10/23, Description: BESTBUY purchase, amount: 31.16, Debit: Office Supplies Expense $31.16, Credit: Credit Card Payable $31.16
+                
+                If the amount is negative, keep them as negative. 
+                
+                Ensure to clearly state the accounts involved in the debit and credit entries without additional explanations.
+            """
+    try:
+        response = client.chat.completions.create(
+            model=model,
+            messages=[
+                {"role": "system",
+                 "content": "You are a model trained to book journal entries like a professional accountant."},
+                {"role": "user", "content": prompt}
+            ]
+        )
+
+        # Assuming the API returns a structured response; otherwise, parse as needed
+        journal_entry = response.choices[0].message.content.strip()
+
+        # Split the journal entry into separate lines if necessary
+        journal_entries = journal_entry.splitlines()
+        return journal_entries
+
+    except Exception as e:
+        # Handle exceptions, e.g., API errors
+        print(f"Error fetching journal entry: {e}")
+        return None
+
+
+def get_journal_entry_bank(transaction):
+    prompt = f"""
+    I have this transaction {transaction} from a bank statement that I need to record as journal entries. 
+
+    please put them in one line using following format:
+    Date, Description, amount, Debit, Credit. Here is an example:
+
+    Date: 09/10/23, Description: BESTBUY purchase, amount: 31.16, Debit: Office Supplies Expense $31.16, Credit: Credit Card Payable $31.16
+
+    If the amount is negative, keep them as negative. 
+
+    Ensure to clearly state the accounts involved in the debit and credit entries without additional explanations.
+"""
+    try:
+        response = client.chat.completions.create(
+            model=model,
+            messages=[
+                {"role": "system",
+                 "content": "You are a model trained to book journal entries like a professional accountant."},
+                {"role": "user", "content": prompt}
+            ]
+        )
+
+        # Assuming the API returns a structured response; otherwise, parse as needed
+        journal_entry = response.choices[0].message.content.strip()
+
+        # Split the journal entry into separate lines if necessary
+        journal_entries = journal_entry.splitlines()
+        return journal_entries
+
+    except Exception as e:
+        # Handle exceptions, e.g., API errors
+        print(f"Error fetching journal entry: {e}")
+        return None
