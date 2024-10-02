@@ -5,17 +5,21 @@ import os, re, glob, pandas
 
 from app.db.db_handler import PGHandler
 from app.utils import streamlit_components
-from app.llm.openai_api import get_vendor, get_coa, get_vendor_information, get_journal_entry_cc2
+from app.llm.openai_api import get_vendor, get_coa, get_vendor_information, get_journal_entry_cc2, \
+    get_journal_entry_bank
 from app.data_entry import email_processing, pdf_processing
 
-streamlit_components.streamlit_ui('🦣 Dashboard for Accountant')
+streamlit_components.streamlit_ui('🦣 Bank Statement')
 pg_handler = PGHandler()
 # -----------------------------------------------------------------------------------------------------------
-tab1, tab2 = st.tabs(["Extract from Statement", "Manual Entry"])
-
-with tab2: st.info('🏗️ under construction...')
+tab1, tab2 = st.tabs(["Transactions", "Journal Entry"])
 
 with tab1:
+    df = pg_handler.get_journal('bank_transactions')
+    st.dataframe(df)
+
+
+with tab2:
     if button("Load Bank Statement?", key='key1'):
         with st.spinner('Extracting Bank Statement...'):
 
@@ -67,7 +71,8 @@ with tab1:
             transactions = []
             for entry in extracted_data:
                 text = entry['text']
-                match = re.match(r'(\d{2}/\d{2}/\d{2})\*? (.+) (-?\$\d{1,3}(?:,\d{3})*\.\d{2})$', text)
+                # match = re.match(r'(\d{2}/\d{2}/\d{2})\*? (.+) (-?\$\d{1,3}(?:,\d{3})*\.\d{2})$', text)
+                match = re.match(r'(\d{2}/\d{2}/\d{2})\s+(.+?)\s+(-?\d{1,3}(?:,\d{3})*(?:\.\d{2})?)$', text)
 
                 if match:
                     date, description, amount = match.groups()
@@ -98,7 +103,7 @@ with tab1:
             # df = df.drop(columns=['description'])
             st.dataframe(df)
 
-            pg_handler.save_cc_postgres(transactions)
+            # pg_handler.save_cc_postgres(transactions)
 
 
     if button("Book Journals for above transactions", key='key2213'):
@@ -108,13 +113,15 @@ with tab1:
 
         transactions = []
         all_journal_entries = []
-        for index, row in df_cc.iterrows():
-            transaction = f"Row {index + 1}: ID: {row['clientID']}, Date: {row['date']}, Description: {row['description']}, Amount: {row['amount']}"
-            entry = get_journal_entry_cc2(transaction)[0]
+        for index, row in df.iterrows():
+            transaction = f"Row {index + 1}: ID: {row['clientID']}, Date: {row['date']}, Description: {row['description']} , COA: {row['COA']} , vendor_name: {row['vendor_name']}, Amount: {row['amount']}"
+            entry = get_journal_entry_bank(transaction)[0]
             st.text(entry)
 
             date = safe_search(r"Date: ([\d/]+)", entry)
             description = safe_search(r"Description: ([^,]+),", entry)
+            COA = safe_search(r"COA: ([^,]+),", entry)
+            vendor_name = safe_search(r"vendor_name: ([^,]+),", entry)
 
             amount_str = safe_search(r"amount: (-?\$?[\d.]+)", entry)  # Updated to include negative amounts
             amount = float(amount_str.replace('$',
@@ -128,6 +135,8 @@ with tab1:
                 'date': date,
                 'description': description,
                 'amount': amount,
+                'vendor_name': vendor_name,
+                'COA': COA,
                 'debit_account': debit_account,
                 'credit_account': credit_account
             })
@@ -135,6 +144,6 @@ with tab1:
         df = pandas.DataFrame(all_journal_entries)
         st.dataframe(df)
 
-        pg_handler.save_cc_journal_postgres(all_journal_entries)
+        pg_handler.save_bank_journal_postgres(all_journal_entries)
 
 

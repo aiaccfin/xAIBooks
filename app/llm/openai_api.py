@@ -40,6 +40,7 @@ def get_coa(description):
 def get_vendor(description):
     user_content = f"""
            You will be provided with a transaction description. Your task is to extract two pieces of information:
+           
            The vendor name, which is the name of the company or service in the description.
 
            Focus on the part of the description that typically follows the date or a person's name, and is often a recognizable brand or service name.
@@ -58,6 +59,8 @@ def get_vendor(description):
 
            Description: "HARRIS TEETER CHAPEL HILL NC 9012-GRO"
            Response: "Harris Teeter"
+
+            If There is no recognizable brand or service name in the description provided, or cannot find an appropriate Vendor name, just put the given description in the vendor name. 
 
            Now, extract the vendor name from the following description:
            Description: "{description}"
@@ -126,10 +129,11 @@ def get_journal_entry_cc(transaction):
 
 def get_journal_entry_cc2(transaction):
     prompt = f"""
-                I have this transaction {transaction} from a credit card statement that I need to record as journal entries. 
+                I have this transaction {transaction} from a credit card statement that I need to record as journal entries.
+                The transaction already has Date, Description, amount, COA and Vendor_name. Please do not change the content already existed.  
                 
                 please put them in one line using following format:
-                Date, Description, amount, Debit, Credit. Here is an example:
+                Date, Description, vendor_name, COA, amount, Debit, Credit. Here is an example:
                 
                 Date: 09/10/23, Description: BESTBUY purchase, amount: 31.16, Debit: Office Supplies Expense $31.16, Credit: Credit Card Payable $31.16
                 
@@ -165,9 +169,9 @@ def get_journal_entry_bank(transaction):
     I have this transaction {transaction} from a bank statement that I need to record as journal entries. 
 
     please put them in one line using following format:
-    Date, Description, amount, Debit, Credit. Here is an example:
+                Date, Description, vendor_name, COA, amount, Debit, Credit. Here is an example:
 
-    Date: 09/10/23, Description: BESTBUY purchase, amount: 31.16, Debit: Office Supplies Expense $31.16, Credit: Credit Card Payable $31.16
+    Date: 09/10/23, Description: BESTBUY purchase, amount: 31.16, vendor_name: Walmart, COA: invetory, Debit: Office Supplies Expense $31.16, Credit: Credit Card Payable $31.16
 
     If the amount is negative, keep them as negative. 
 

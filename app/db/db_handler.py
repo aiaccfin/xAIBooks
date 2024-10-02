@@ -5,9 +5,7 @@ import json
 import psycopg2
 from psycopg2 import sql
 
-
 from app.llm.openai_api import get_vendor, get_coa, get_vendor_information
-
 CFG = dotenv.dotenv_values(".env")
 
 
@@ -24,20 +22,6 @@ class PGHandler:
 
     def create_table_if_not_exists(self):
         try:
-
-
-            create_table_statement_cc = """
-                CREATE TABLE IF NOT EXISTS statement_cc (
-                    transaction_id SERIAL PRIMARY KEY,
-                    clientID VARCHAR(50) NOT NULL,
-                    date DATE NOT NULL,
-                    description VARCHAR(255),
-                    amount NUMERIC(12, 2) NOT NULL,
-                    vendor_name VARCHAR(255) NOT NULL,
-                    COA VARCHAR(255) NOT NULL
-                );
-            """
-
             create_table_vendor = """
                 CREATE TABLE IF NOT EXISTS vendors (
                     vendor_id SERIAL PRIMARY KEY,
@@ -46,26 +30,51 @@ class PGHandler:
                 );
             """
 
+            create_table_bank = """
+                CREATE TABLE IF NOT EXISTS banks (
+                    bank_id SERIAL PRIMARY KEY,
+                    bank_account VARCHAR(255) UNIQUE NOT NULL,
+                    bank_type  VARCHAR(255),
+                    business_info JSONB NOT NULL
+                );
+            """
 
-            create_table_vendor = """
-                CREATE TABLE IF NOT EXISTS journal_entries_cc (
+            create_table_cc_transactions = """
+                CREATE TABLE IF NOT EXISTS cc_transactions (
                     id SERIAL PRIMARY KEY,
                     clientID VARCHAR(50),
                     date DATE ,
-                    description TEXT ,
+                    description VARCHAR(255),
                     amount NUMERIC(10, 2) ,
                     debit_account VARCHAR(50) ,
                     credit_account VARCHAR(50) ,
+                    vendor_name VARCHAR(255),
+                    COA VARCHAR(255),
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 );
             """
 
+            create_table_bank_transactions = """
+                CREATE TABLE IF NOT EXISTS bank_transactions (
+                    id SERIAL PRIMARY KEY,
+                    clientID VARCHAR(50),
+                    date DATE ,
+                    description VARCHAR(255),
+                    amount NUMERIC(10, 2) ,
+                    debit_account VARCHAR(50) ,
+                    credit_account VARCHAR(50) ,
+                    vendor_name VARCHAR(255),
+                    COA VARCHAR(255),
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            """
 
-
-            self.cursor.execute(create_table_statement_cc)  # Execute the query
+            self.cursor.execute(create_table_cc_transactions)  # Execute the query
+            self.cursor.execute(create_table_bank_transactions)  # Execute the query
             self.cursor.execute(create_table_vendor)  # Execute the query
+            self.cursor.execute(create_table_bank)  # Execute the query
             self.connection.commit()  # Commit the transaction
-            st.success("Table 'transactions_cc' verified successfully.")
+            st.success("DB Connection verified successfully.")
         except Exception as e:
             self.connection.rollback()  # Rollback the transaction on error
             st.error(f"Error creating table: {e}")
@@ -133,6 +142,18 @@ class PGHandler:
 
             # Create a pandas DataFrame from the fetched data
             df = pandas.DataFrame(data, columns=['date', 'COA', 'amount'])
+            return df
+        except Exception as e:
+            raise Exception(f"Failed to retrieve data from the database: {e}")
+
+    def get_journal(self, table_name):
+        try:
+            # Query to select specific columns: date, description, COA, amount
+            query = f"SELECT clientid, date, description, amount, COA, vendor_name, debit_account, credit_account FROM {table_name}"
+            self.cursor.execute(query)
+            data = self.cursor.fetchall()
+            # Create a pandas DataFrame from the fetched data
+            df = pandas.DataFrame(data)
             return df
         except Exception as e:
             raise Exception(f"Failed to retrieve data from the database: {e}")
@@ -276,14 +297,41 @@ class PGHandler:
         try:
             for transaction in transactions:
                 insert_query = sql.SQL("""
-                    INSERT INTO journal_entries_cc (clientID, date, description, amount, debit_account, credit_account)
-                    VALUES (%s, %s, %s, %s, %s, %s)
+                    INSERT INTO cc_transactions (clientID, date, description, amount, vendor_name, COA, debit_account, credit_account)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                 """)
                 self.cursor.execute(insert_query, (
                     transaction['clientID'],
                     transaction['date'],
                     transaction['description'],
                     transaction['amount'],
+                    transaction['vendor_name'],
+                    transaction['COA'],
+                    transaction['debit_account'],
+                    transaction['credit_account']
+                ))
+            self.connection.commit()
+            st.success("Transactions saved to PostgreSQL!")
+        except Exception as e:
+            self.connection.rollback()
+            st.error(f"Failed to save transactions: {e}")
+        finally:
+            self.connection.close()  # Close connection when done
+
+    def save_bank_journal_postgres(self, transactions):
+        try:
+            for transaction in transactions:
+                insert_query = sql.SQL("""
+                    INSERT INTO bank_transactions (clientID, date, description, amount, vendor_name, COA, debit_account, credit_account)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                """)
+                self.cursor.execute(insert_query, (
+                    transaction['clientID'],
+                    transaction['date'],
+                    transaction['description'],
+                    transaction['amount'],
+                    transaction['vendor_name'],
+                    transaction['COA'],
                     transaction['debit_account'],
                     transaction['credit_account']
                 ))

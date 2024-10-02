@@ -12,5 +12,5 @@ with tab1:
         from app.db import db_handler
         db_handler = db_handler.PGHandler()
 
-        db_handler.truncate_table('statement_cc')
+        db_handler.truncate_table('cc_transactions')
         st.success('System is ready for use. This function need only run once.')
