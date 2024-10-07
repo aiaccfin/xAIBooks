@@ -3,7 +3,7 @@ from streamlit_extras.stateful_button import button
 
 import os, re, glob, pandas
 
-from app.db.db_handler import PGHandler
+from app.db.db_postgres import PGHandler
 from app.utils import streamlit_components
 from app.llm.openai_api import get_vendor, get_coa, get_vendor_information, get_journal_entry_cc2, \
     get_journal_entry_bank

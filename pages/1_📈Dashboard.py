@@ -10,7 +10,7 @@ st.error('2. system design: clarify # of Red Flagged unfinished spots')
 st.error('3. front end: add links to the Lower Portion')
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["Trial Balance", "General Ledger", "Vendor List", "Raw Transactions","ChatBot"])
 # from app.db import mongo_db
-from app.db.db_handler import PGHandler
+from app.db.db_postgres import PGHandler
 pg_handler = PGHandler()
 
 with tab1:
