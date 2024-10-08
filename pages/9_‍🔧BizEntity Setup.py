@@ -1,10 +1,9 @@
 import streamlit as st
-from streamlit_extras.stateful_button import button
 from app.utils import streamlit_components
 
 from app.db.db_postgres import PGHandler
 
-streamlit_components.streamlit_ui('🦣 Dashboard')
+streamlit_components.streamlit_ui('🦣 BizEntity Setup')
 pg_handler = PGHandler()
 # -----------------------------------------------------------------------------------------------------------
 
@@ -19,7 +18,7 @@ with tab1:
 
 with tab2:
     df = pg_handler.get_business_fin(801)
-    df.columns = ['businessID', 'Name', 'Base Currency', 'Fiscal Year End', 'tax_setting', 'default_payment_term', 'Accounting System' ]
+    df.columns = ['businessID', 'Name', 'Base Currency', 'Fiscal Year End', 'tax_setting', 'default_payment_term', 'Accounting System','bank 1', 'bank 2', 'bank 3' ]
     st.dataframe(df)
 
 with tab3:

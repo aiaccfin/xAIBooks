@@ -57,6 +57,19 @@ class PGHandler:
                 );
             """
 
+            create_cc_journals = """
+                CREATE TABLE IF NOT EXISTS cc_journals (
+                    journal_id SERIAL PRIMARY KEY,
+                    clientID VARCHAR(255),
+                    date  Date,
+                    description VARCHAR(255),
+                    account VARCHAR(255),
+                    debit NUMERIC(10, 2) ,
+                    credit NUMERIC(10, 2)
+                );
+            """
+
+
             create_table_cc_transactions = """
                 CREATE TABLE IF NOT EXISTS cc_transactions (
                     id SERIAL PRIMARY KEY,
@@ -114,7 +127,38 @@ class PGHandler:
                 );
             """
 
+
+            create_table_invoices = """
+                CREATE TABLE IF NOT EXISTS invoices (
+                    invoice_id SERIAL PRIMARY KEY,
+                    invoice_number VARCHAR(50)   NOT NULL,
+                    biz_id INTEGER,
+                    biz_name VARCHAR(255),
+                    customer_id INTEGER,
+                    customer_name VARCHAR(100),
+                    client_id INTEGER,
+                    client_name VARCHAR(100),
+                    client_address VARCHAR(100),
+                    client_payment_mentod VARCHAR(100),
+                    issue_date DATE,
+                    due_date DATE,
+                    status VARCHAR(20),
+                    item_description VARCHAR(255),
+                    item_quantity NUMERIC(10, 2),
+                    item_unit_price NUMERIC(10, 2),
+                    item_tax_rate NUMERIC(10, 2),
+                    item_tax  NUMERIC(10, 2),
+                    item_amount NUMERIC(10, 2),
+                    invoice_total_amount DECIMAL(10, 2),
+                    invoice_recurring BOOLEAN, 
+                    invoice_note VARCHAR(255)                                                        
+                    );
+            """
+
+
             self.cursor.execute(create_table_cc_transactions)  # Execute the query
+            self.cursor.execute(create_table_invoices)  # Execute the query
+            self.cursor.execute(create_cc_journals)  # Execute the query
             self.cursor.execute(create_table_payments)  # Execute the query
             self.cursor.execute(create_table_bank_transactions)  # Execute the query
             self.cursor.execute(create_table_vendor)  # Execute the query
@@ -166,7 +210,7 @@ class PGHandler:
     def get_coa_data(self):
         try:
             # Query to select the COA and amount
-            query = "SELECT COA, SUM(amount) as total_amount FROM statement_cc GROUP BY COA"
+            query = "SELECT COA, SUM(amount) as total_amount FROM cc_transactions GROUP BY COA"
             self.cursor.execute(query)
 
             # Fetch data
@@ -178,17 +222,19 @@ class PGHandler:
         except Exception as e:
             raise Exception(f"Failed to retrieve data from the database: {e}")
 
-    def get_gl(self):
+    def get_journals(self):
         try:
             # Query to select specific columns: date, description, COA, amount
-            query = "SELECT date, COA, amount FROM statement_cc"
+            query = "SELECT * FROM cc_journals"
             self.cursor.execute(query)
 
             # Fetch data
             data = self.cursor.fetchall()
 
             # Create a pandas DataFrame from the fetched data
-            df = pandas.DataFrame(data, columns=['date', 'COA', 'amount'])
+            column_names = [desc[0] for desc in self.cursor.description]
+            df = pandas.DataFrame(data, columns=column_names)
+
             return df
         except Exception as e:
             raise Exception(f"Failed to retrieve data from the database: {e}")
@@ -196,11 +242,14 @@ class PGHandler:
     def get_journal(self, table_name):
         try:
             # Query to select specific columns: date, description, COA, amount
-            query = f"SELECT clientid, date, description, amount, COA, vendor_name, debit_account, credit_account FROM {table_name}"
+            query = f"SELECT clientid, date,description, amount, COA, vendor_name, debit_account, credit_account FROM {table_name}"
             self.cursor.execute(query)
             data = self.cursor.fetchall()
+            column_names = [desc[0] for desc in self.cursor.description]
+
             # Create a pandas DataFrame from the fetched data
-            df = pandas.DataFrame(data)
+            df = pandas.DataFrame(data, columns=column_names)
+
             return df
         except Exception as e:
             raise Exception(f"Failed to retrieve data from the database: {e}")
@@ -258,7 +307,7 @@ class PGHandler:
     def get_raw_cc(self):
         try:
             # Query to select specific columns: date, description, COA, amount
-            query = "SELECT * FROM statement_cc"
+            query = "SELECT * FROM cc_transactions"
             self.cursor.execute(query)
 
             # Fetch data
@@ -489,7 +538,7 @@ class PGHandler:
 
     def get_business_fin(self, business_id):
         try:
-            query = "SELECT business_id, business_name,  business_base_currency, fiscal_year, tax_setting, default_payment_term, integration_setting FROM business where business_id = %s ;"
+            query = "SELECT business_id, business_name,  business_base_currency, fiscal_year, tax_setting, default_payment_term, integration_setting, bank1, bank2, bank3 FROM business where business_id = %s ;"
             # query = "SELECT * FROM business where business_id = %s ;"
 
             self.cursor.execute(query, (business_id,))
@@ -546,3 +595,46 @@ class PGHandler:
         except Exception as e:
             raise Exception(f"Failed to retrieve data from the database: {e}")
 
+
+    def get_invoice(self, biz_id=None, invoice_number=None):
+        try:
+            query = "SELECT * FROM invoices WHERE biz_id = %s and invoice_number = %s"
+            self.cursor.execute(query, (biz_id, invoice_number))
+            # Execute the query to get vendor data
+            invoices = self.cursor.fetchall()
+            column_names = [desc[0] for desc in self.cursor.description]
+
+            df = pandas.DataFrame(invoices, columns=column_names)
+            return df
+
+        except Exception as e:
+            st.error(f"Error fetching vendors: {e}")
+            return []
+
+
+    def save_cc_journal_postgres_2(self, new_df):
+        try:
+            for index, row in new_df.iterrows():
+                insert_query = sql.SQL("""
+                    INSERT INTO cc_journals (clientid, date, description, debit_account, credit_account, debit, credit)
+                    VALUES (%s, %s, %s, %s, %s,%s, %s)
+                """)
+                self.cursor.execute(insert_query, (
+                    row['clientid'],
+                    row['date'],
+                    row['description'],
+                    row['debit_account'],
+                    row['credit_account'],
+                    row['debit'],
+                    row['credit']
+                ))
+
+            update_query = sql.SQL("UPDATE cc_journals SET account = COALESCE(NULLIF(debit_account, 'NaN'), credit_account) ;")
+            self.cursor.execute(update_query)
+            self.connection.commit()
+            st.success("Transactions saved to PostgreSQL!")
+        except Exception as e:
+            self.connection.rollback()
+            st.error(f"Failed to save transactions: {e}")
+        finally:
+            self.connection.close()  # Close connection when done

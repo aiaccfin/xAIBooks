@@ -5,9 +5,6 @@ streamlit_components.streamlit_ui('🦣 Workflow Diagram')
 from streamlit_extras.stateful_button import button
 # -----------------------------------------------------------------------------------------------------------
 st.image('./images/workflow.png')
-st.error('1. front end: Showing the whole Accounting Process ...')
-st.error('2. system design: clarify # of Red Flagged unfinished spots')
-st.error('3. front end: add links to the Lower Portion')
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["Trial Balance", "General Ledger", "Vendor List", "Raw Transactions","ChatBot"])
 # from app.db import mongo_db
 from app.db.db_postgres import PGHandler
@@ -15,44 +12,58 @@ pg_handler = PGHandler()
 
 with tab1:
 
-    # data = list(mongo_db.collection_cc.find({}, {'_id': 0, 'COA': 1, 'amount': 1}))
-    # df = pd.DataFrame(data)
-    # tb = df.groupby('COA').sum().reset_index()
+    df = pg_handler.get_journals()
 
-    tb = pg_handler.get_coa_data()
+    # Group by account and sum debits and credits
+    trial_balance = df.groupby('account').agg(
+        total_debit=('debit', 'sum'),
+        total_credit=('credit', 'sum')
+    ).reset_index()
 
-    # tb['Debit'] = tb['amount'].apply(lambda x: x if x > 0 else 0)  # Show negative amounts as positive in Debit
-    # tb['Credit'] = tb['amount'].apply(lambda x: x if x < 0 else 0)  # Show positive amounts in Credit
-    #
-    # tb['Debit'] = tb['Debit'].apply(lambda x: f"{x:.2f}" if x != 0 else "-")  # Two decimals or "-"
-    # tb['Credit'] = tb['Credit'].apply(lambda x: f"{x:.2f}" if x != 0 else "-")  # Two decimals or "-"
-    #
-    # tb = tb.drop(columns=['amount'])
+    # Calculate the difference (debit - credit)
+    trial_balance['difference'] = trial_balance['total_debit'] - trial_balance['total_credit']
 
-    st.subheader('Trial Balance')
-    st.error('front end add link to GL to be interactive')
-    st.table(tb)
+    # Display Trial Balance in Streamlit
+    st.title("Trial Balance")
+
+    # Display the trial balance table
+    st.dataframe(trial_balance)
+
+    # Check if the trial balance is balanced
+    total_debits = trial_balance['total_debit'].sum()
+    total_credits = trial_balance['total_credit'].sum()
+
+    st.code(f'total debits: {total_debits}')
+    st.code(f'total credits: {total_credits}')
+
+    if total_debits - total_credits <0.001:
+        st.success("The Trial Balance is **balanced**.")
+    else:
+        st.error(f"The Trial Balance is **not balanced**. Debits: {total_debits}, Credits: {total_credits}")
 
 
 with tab2:
     if button("General Ledger", key="button12"):
+        df = pg_handler.get_journals()
+        grouped_df = df.groupby('account')
 
-        df = pg_handler.get_gl()
-        # df = pd.DataFrame(data)
+        # Streamlit display
+        st.title("General Ledger with Details")
 
-        # df['Debit'] = df['amount'].apply(lambda x: -x if x < 0 else 0)  # Show negative amounts as positive in Debit
-        # df['Credit'] = df['amount'].apply(lambda x: x if x > 0 else 0)  # Show positive amounts in Credit
-        #
-        # df = df.drop(columns=['amount'])
-        #
-        # df['Debit'] = df['Debit'].apply(lambda x: f"{x:.2f}" if x != 0 else "-")  # Two decimals or "-"
-        # df['Credit'] = df['Credit'].apply(lambda x: f"{x:.2f}" if x != 0 else "-")  # Two decimals or "-"
-        #
-        df = df.sort_values(by=['COA', 'date'])
-        coa_list = df['COA'].unique()
-        for coa in coa_list:
-            st.subheader(f"`{coa}`")
-            st.dataframe(df[df['COA'] == coa])
+        # Loop through each account and display the account along with the transactions
+        for account, transactions in grouped_df:
+            # Display account header
+            st.subheader(f"Account: {account}")
+
+            # Show the details (transactions) under this account
+            st.dataframe(transactions[['date', 'description', 'debit', 'credit']])
+
+            # Optionally, you can add a summary for debits and credits per account
+            total_debit = transactions['debit'].sum()
+            total_credit = transactions['credit'].sum()
+            st.write(f"**Total Debit**: {total_debit:.2f}")
+            st.write(f"**Total Credit**: {total_credit:.2f}")
+            st.write("---")
 
 
 with tab3:
@@ -80,8 +91,60 @@ with tab4:
         st.dataframe(df)
 
 with tab5:
-    st.error('''
-        1. Data Source? Who provide Data Source and validate?
-        2. User case.
-    
-    ''')
+    import streamlit as st
+    import pandas as pd
+
+    # Sample journal data
+    data = [
+        {"clientid": "CC888", "date": "2023-10-09", "description": "CREDITADJUSTMENT", "account": "Credit Card Payable",
+         "debit": 46.85, "credit": 0.00},
+        {"clientid": "CC888", "date": "2023-10-09", "description": "CREDITADJUSTMENT", "account": "Bad Debts Expense",
+         "debit": 0.00, "credit": 46.85},
+        {"clientid": "CC888", "date": "2023-09-10", "description": "BESTBUY 00160229500001602 DURHAM NC",
+         "account": "Office Equipment", "debit": 31.16, "credit": 0.00},
+        {"clientid": "CC888", "date": "2023-09-10", "description": "BESTBUY 00160229500001602 DURHAM NC",
+         "account": "Credit Card Payable", "debit": 0.00, "credit": 31.16},
+        {"clientid": "CC888", "date": "2023-09-11", "description": "THEHOMEDEPOT DURHAM NC",
+         "account": "Repairs and Maintenance Expense", "debit": 25.22, "credit": 0.00},
+        {"clientid": "CC888", "date": "2023-09-11", "description": "THEHOMEDEPOT DURHAM NC",
+         "account": "Credit Card Payable", "debit": 0.00, "credit": 25.22},
+        {"clientid": "CC888", "date": "2023-09-12", "description": "UBEREATS help.uber.com CA",
+         "account": "Travel and Entertainment Expense", "debit": 34.42, "credit": 0.00},
+        {"clientid": "CC888", "date": "2023-09-12", "description": "UBEREATS help.uber.com CA",
+         "account": "Credit Card Payable", "debit": 0.00, "credit": 34.42},
+        {"clientid": "CC888", "date": "2023-09-12", "description": "WEGMANSCHAPELHILL#140000000140 CHAPELHILL NC",
+         "account": "Inventory", "debit": 180.35, "credit": 0.00},
+        {"clientid": "CC888", "date": "2023-09-12", "description": "WEGMANSCHAPELHILL#140000000140 CHAPELHILL NC",
+         "account": "Credit Card Payable", "debit": 0.00, "credit": 180.35},
+        # Add the rest of the data here...
+    ]
+
+    # Convert the list of dictionaries to a pandas DataFrame
+    df = pd.DataFrame(data)
+
+    # Optionally, set the 'date' column as a datetime type for better formatting
+    df['date'] = pd.to_datetime(df['date'])
+
+    # Group by account and sum debits and credits
+    trial_balance = df.groupby('account').agg(
+        total_debit=('debit', 'sum'),
+        total_credit=('credit', 'sum')
+    ).reset_index()
+
+    # Calculate the difference (debit - credit)
+    trial_balance['difference'] = trial_balance['total_debit'] - trial_balance['total_credit']
+
+    # Display Trial Balance in Streamlit
+    st.title("Trial Balance")
+
+    # Display the trial balance table
+    st.dataframe(trial_balance)
+
+    # Check if the trial balance is balanced
+    total_debits = trial_balance['total_debit'].sum()
+    total_credits = trial_balance['total_credit'].sum()
+
+    if total_debits - total_credits < 0.01:
+        st.success("The Trial Balance is **balanced**.")
+    else:
+        st.error(f"The Trial Balance is **not balanced**. Debits: {total_debits}, Credits: {total_credits}")

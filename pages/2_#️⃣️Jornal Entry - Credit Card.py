@@ -11,10 +11,12 @@ from app.data_entry import email_processing, pdf_processing
 streamlit_components.streamlit_ui('🦣 Dashboard for Accountant')
 pg_handler = PGHandler()
 # -----------------------------------------------------------------------------------------------------------
-tab1, tab2 = st.tabs(["Transactions", "Journal Entry"])
+tab1, tab2, tab3, tab4 = st.tabs(["Transactions", "Book Journal", 'Journal Entries',''])
 
 with tab1:
     df = pg_handler.get_journal('cc_transactions')
+    df.columns = ['client id', 'Date', 'Desc', 'Amount','COA', 'Vendor','debit', 'credit']
+
     st.dataframe(df)
 
 with tab2:
@@ -32,36 +34,38 @@ with tab2:
                 print("No PDF files found.")
 
             extracted_data = pdf_processing.extract_pdf_lines(pdf_path)
-            st.write(extracted_data)
+            st.text(extracted_data)
         st.success('Credit Card Statement Extracted!')
 
-
-    if button("Save Credit Card Statement?", key='key111'):
-        with st.spinner('Save Credit Card Statement...'):
-
-            transactions = []
-            for entry in extracted_data:
-                text = entry['text']
-                match = re.match(r'(\d{2}/\d{2}/\d{2})\*? (.+) (-?\$\d{1,3}(?:,\d{3})*\.\d{2})$', text)
-
-                if match:
-                    date, description, amount = match.groups()
-                    amount = amount.replace('$', '')
-                    amount = float(amount.replace(',', ''))
-
-                    transactions.append({
-                        'clientID': 'CC888',
-                        'date': date,
-                        'description': description,
-                        'amount': amount,
-                    })
-
-            df_cc = pandas.DataFrame(transactions)
-
-            # df = df.drop(columns=['description'])
-            st.dataframe(df_cc)
-
-        st.success('Credit Card Statement Extracted!')
+    # if button("Save Credit Card Statement?", key='key111'):
+    #     with st.spinner('Save Credit Card Statement...'):
+    #
+    #         transactions = []
+    #         for entry in extracted_data:
+    #             text = entry['text']
+    #
+    #             # match = re.match(r'(\d{2}/\d{2}/\d{2})\*? (.+) (-?\$\d{1,3}(?:,\d{3})*\.\d{2})$', text) #Amex
+    #             # match = re.match(r'(\d{2}/\d{2})\s+\d{2}/\d{2}\s+(.+?)\s+(-?\$\d{1,3}(?:,\d{3})*\.\d{2})$', text)
+    #             match = re.match(r'(\d{2}/\d{2})\s+\d{2}/\d{2}\s+(.+?)\s+(-?\$?[\d,]+(?:\.\d{2})?)$', text) #BOA
+    #
+    #             if match:
+    #                 date, description, amount = match.groups()
+    #                 amount = amount.replace('$', '')
+    #                 amount = float(amount.replace(',', ''))
+    #
+    #                 transactions.append({
+    #                     'clientID': 'CC888',
+    #                     'date': date,
+    #                     'description': description,
+    #                     'amount': amount,
+    #                 })
+    #
+    #         df_cc = pandas.DataFrame(transactions)
+    #
+    #         # df = df.drop(columns=['description'])
+    #         st.dataframe(df_cc)
+    #
+    #     st.success('Credit Card Statement Extracted!')
 
 
     if button("Process for Vendor and COA?", key='key2'):
@@ -69,7 +73,8 @@ with tab2:
             transactions = []
             for entry in extracted_data:
                 text = entry['text']
-                match = re.match(r'(\d{2}/\d{2}/\d{2})\*? (.+) (-?\$\d{1,3}(?:,\d{3})*\.\d{2})$', text)
+                # match = re.match(r'(\d{2}/\d{2}/\d{2})\*? (.+) (-?\$\d{1,3}(?:,\d{3})*\.\d{2})$', text) # Amex
+                match = re.match(r'(\d{2}/\d{2})\s+\d{2}/\d{2}\s+(.+?)\s+(-?\$?[\d,]+(?:\.\d{2})?)$', text)
 
                 if match:
                     date, description, amount = match.groups()
@@ -144,4 +149,21 @@ with tab2:
 
         pg_handler.save_cc_journal_postgres(all_journal_entries)
 
+
+with tab3:
+    def split_debit_credit(df):
+        rows = []
+        for _, row in df.iterrows():
+            debit_row = {'clientid': row['clientid'], 'date':row['date'],'description': row['description'],  'debit_account': row['debit_account'], 'debit': abs(row['amount']), 'credit': 0}
+            credit_row = {'clientid': row['clientid'], 'date':row['date'],'description': row['description'], 'credit_account': row['credit_account'], 'debit': 0, 'credit': abs(row['amount'])}
+            rows.extend([debit_row, credit_row])
+        return pandas.DataFrame(rows)
+
+    df = pg_handler.get_journal('cc_transactions')
+    new_df = split_debit_credit(df)
+
+    # Display the result in Streamlit
+    st.dataframe(new_df)
+    if button("Save to DB?", key='key22133'):
+        pg_handler.save_cc_journal_postgres_2(new_df)
 
