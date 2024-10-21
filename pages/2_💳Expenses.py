@@ -1,6 +1,6 @@
 import streamlit as st
-from app.utils import streamlit_components
-from app.db.db_postgres import PGHandler
+from apps.utils import streamlit_components
+from apps.db.db_postgres import PGHandler
 
 streamlit_components.streamlit_ui('🦣 Expenses')
 pg_handler = PGHandler()
@@ -29,11 +29,11 @@ with tab2:
     df.columns = ['transaction id', 'BizEntity', 'Issue Date', 'Description','Amt', 'Due Date', 'Paid Date']
     st.dataframe(df)
 
-    st.subheader('Payments of transaction 32')
-    df = pg_handler.get_payments(business_id=business_id, vendor_id=vendor_id, transaction_id=transaction_id)
-    df.columns = ['transaction id', 'Pay Date', 'Amt', 'Payment Method','Status', 'Note']
+    # st.subheader('Payments of transaction 32')
+    # df = pg_handler.get_payments(business_id=business_id, vendor_id=vendor_id, transaction_id=transaction_id)
+    # df.columns = ['transaction id', 'Pay Date', 'Amt', 'Payment Method','Status', 'Note','']
 
-    st.dataframe(df)
+    # st.dataframe(df)
 
 
 with tab3: st.warning('under construction...')

@@ -2,8 +2,11 @@ import os
 # Email account credentials
 imap_ssl_port = 993
 username = "xaibooks@outlook.com"
-password = "IBM3600s"
+password = "mFQi6JjQpKm1XA3Vo0fg"
 imap_server = "outlook.office365.com"
+# imap_server = "imap-mail.outlook.com"
+
+
 cc_attachments_dir = "data/xaibooks/cc"
 bank_attachments_dir = "data/xaibooks/bank"
 

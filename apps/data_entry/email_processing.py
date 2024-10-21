@@ -10,7 +10,7 @@ def email_extraction():
     m = imaplib.IMAP4_SSL(cfg.imap_server, cfg.imap_ssl_port)
     st.write(cfg.imap_ssl_port)
     m.login(cfg.username, cfg.password)
-
+    st.write('login...')
     # Select the mailbox you want to check (e.g., 'inbox')
     m.select("INBOX")
 

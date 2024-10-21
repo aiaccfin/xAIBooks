@@ -3,11 +3,11 @@ from streamlit_extras.stateful_button import button
 
 import os, re, glob, pandas
 
-from app.db.db_postgres import PGHandler
-from app.utils import streamlit_components
-from app.llm.openai_api import get_vendor, get_coa, get_vendor_information, get_journal_entry_cc2, \
+from apps.db.db_postgres import PGHandler
+from apps.utils import streamlit_components
+from apps.llm.openai_api import get_vendor, get_coa, get_vendor_information, get_journal_entry_cc2, \
     get_journal_entry_bank
-from app.data_entry import email_processing, pdf_processing
+from apps.data_entry import email_processing, pdf_processing
 
 streamlit_components.streamlit_ui('🦣 Bank Statement')
 pg_handler = PGHandler()

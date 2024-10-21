@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 from streamlit_extras.stateful_button import button
 
-from app.utils import streamlit_components
+from apps.utils import streamlit_components
 
 streamlit_components.streamlit_ui('🦣 Workflow Diagram')
 

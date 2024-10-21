@@ -1,13 +1,13 @@
 import streamlit as st, re, pandas as pd
 
-from app.utils import streamlit_components
+from apps.utils import streamlit_components
 streamlit_components.streamlit_ui('🦣 Workflow Diagram')
 from streamlit_extras.stateful_button import button
 # -----------------------------------------------------------------------------------------------------------
 st.image('./images/workflow.png')
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["Trial Balance", "General Ledger", "Vendor List", "Raw Transactions","ChatBot"])
-# from app.db import mongo_db
-from app.db.db_postgres import PGHandler
+# from apps.db import mongo_db
+from apps.db.db_postgres import PGHandler
 pg_handler = PGHandler()
 
 with tab1:
@@ -41,6 +41,7 @@ with tab1:
     else:
         st.error(f"The Trial Balance is **not balanced**. Debits: {total_debits}, Credits: {total_credits}")
 
+    st.info('drill down will be implemented by front end')
 
 with tab2:
     if button("General Ledger", key="button12"):

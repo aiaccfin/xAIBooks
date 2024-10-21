@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
-from app.utils import streamlit_components
-from app.db.db_postgres import PGHandler
+from apps.utils import streamlit_components
+from apps.db.db_postgres import PGHandler
 
 streamlit_components.streamlit_ui('🦣 Invoice Management')
 pg_handler = PGHandler()

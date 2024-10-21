@@ -6,7 +6,7 @@ import psycopg2
 from psycopg2 import sql
 
 from config.coa import coa_data
-from app.llm.openai_api import get_vendor, get_coa, get_vendor_information
+from apps.llm.openai_api import get_vendor, get_coa, get_vendor_information
 CFG = dotenv.dotenv_values(".env")
 
 

@@ -1,7 +1,7 @@
-import app
+import apps
 
-# Access components from app.utils
-components = app.utils.tools
+# Access components from apps.utils
+components = apps.utils.tools
 
 # Test the components module
 print(dir(components))

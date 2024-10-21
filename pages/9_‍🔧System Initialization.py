@@ -1,8 +1,8 @@
 import streamlit as st
 from streamlit_extras.stateful_button import button
-from app.utils import streamlit_components
+from apps.utils import streamlit_components
 
-from app.db.db_postgres import PGHandler
+from apps.db.db_postgres import PGHandler
 
 streamlit_components.streamlit_ui('🦣 Dashboard')
 pg_handler = PGHandler()

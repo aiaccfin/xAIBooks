@@ -1,7 +1,7 @@
 import streamlit as st
 from openai import OpenAI
-from app.utils import streamlit_components
-from app.llm.openai_api import get_vendor
+from apps.utils import streamlit_components
+from apps.llm.openai_api import get_vendor
 streamlit_components.streamlit_ui('🦣 Dashboard')
 # -----------------------------------------------------------------------------------------------------------
 tab1, tab2, tab3 = st.tabs(["AS", "Tax Software", "API Documentation"])
