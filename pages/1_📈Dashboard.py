@@ -7,7 +7,7 @@ from streamlit_extras.stateful_button import button
 st.image('./images/workflow.png')
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["Trial Balance", "General Ledger", "Vendor List", "Raw Transactions","ChatBot"])
 # from apps.db import mongo_db
-from apps.db.db_postgres import PGHandler
+from apps.db.db_postgres_aws import PGHandler
 pg_handler = PGHandler()
 
 with tab1:

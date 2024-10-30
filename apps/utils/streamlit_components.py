@@ -8,7 +8,7 @@ def streamlit_ui(main_title):
     st.markdown("""
         <style>
             [data-testid="stSidebarNav"] {
-                background-image: url(https://omnidevx.netlify.app/logo/XAI_Logo.png);
+                background-image: url(https://omnidevx.netlify.app/logo/awsLogo.png);
                 background-size: 250px; /* Set the width and height of the image */
                 background-repeat: no-repeat;
                 padding-top: 120px;
@@ -18,3 +18,14 @@ def streamlit_ui(main_title):
         """,
                 unsafe_allow_html=True,
                 )
+
+    if 'authenticated' not in st.session_state:
+        st.session_state.authenticated = False
+
+    if not st.session_state.authenticated:
+        password = st.text_input("Enter password", type="password")
+        if password == "Semantic":
+            st.session_state.authenticated = True
+            st.write('welcome')
+        else:
+            st.stop()

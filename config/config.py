@@ -11,7 +11,7 @@ cc_attachments_dir = "data/xaibooks/cc"
 bank_attachments_dir = "data/xaibooks/bank"
 
 # pip install --upgrade certifi
-
+biz_id = 888
 
 # Create a directory to save attachments
 if not os.path.isdir(cc_attachments_dir):

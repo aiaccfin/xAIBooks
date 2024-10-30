@@ -3,10 +3,10 @@ import streamlit as st
 from streamlit_extras.stateful_button import button
 from apps.utils import (streamlit_components, )
 
-streamlit_components.streamlit_ui('🐬🦣 xAI Books 🍃🦭')
+streamlit_components.streamlit_ui('🐬🦣 xAI Books AWS 🍃🦭')
 # -----------------------------------------------------------------------------------------------------------
 tab1, tab2, tab3, tab4, tab5 = st.tabs(
-    ["Overview", "Email Rule", "", "", ""])
+    ["Overview", "Email Rule", "Login", "", ""])
 
 with tab1:
     st.write('''
@@ -48,3 +48,11 @@ with tab2:
         7. The retrieved emails will be moved to RETRIEVED Folder and keep them as is.
     ''')
 
+
+with tab3:
+    st.markdown("""
+        #### The biz_id should be retrieved from user login, and should  be carried on for the whole session.
+        
+        For example purpose, our biz_id is 888
+    
+    """)
